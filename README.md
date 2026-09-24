@@ -128,6 +128,35 @@ npm run export:android
 
 ## Деплой
 
-Публичный URL backend и способ установки тестовой мобильной сборки будут добавлены после
-выбора хостинга и сервиса сборки. Продакшен не использует локальный `.env`: переменные
-задаются в настройках платформы.
+Hello-world backend развёрнут на Render.
+
+| Компонент | Публичный URL |
+|---|---|
+| API | https://meal-planner-dna6-api.onrender.com |
+| Swagger UI | https://meal-planner-dna6-api.onrender.com/docs |
+| Health check | https://meal-planner-dna6-api.onrender.com/health |
+
+### Как выполнить деплой
+
+1. Создать на Render новый `Web Service`.
+2. Указать публичный GitHub-репозиторий проекта.
+3. Использовать следующие настройки:
+
+| Настройка | Значение |
+|---|---|
+| Branch | `lab1-delivery-initiation` |
+| Runtime | `Python 3` |
+| Root Directory | `backend` |
+| Build Command | `pip install .` |
+| Start Command | `uvicorn app.main:app --host 0.0.0.0 --port $PORT` |
+| Health Check Path | `/health` |
+
+4. Добавить переменную окружения:
+
+```env
+APP_ENV=production
+```
+
+5. Запустить создание Web Service и дождаться статуса `Live`.
+
+Бесплатный экземпляр Render может переходить в спящий режим при отсутствии запросов, поэтому первое открытие после простоя иногда занимает некоторое время.
