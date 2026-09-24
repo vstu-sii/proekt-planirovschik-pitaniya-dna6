@@ -92,14 +92,17 @@ npm run export:android
 ```text
 .
 ├── .github/
-│   ├── workflows/ci.yml         # CI для Pull Request
+│   ├── workflows/
+│   │   └── ci.yml               # CI для Pull Request
 │   └── pull_request_template.md # шаблон Pull Request
 ├── backend/                     # FastAPI и backend-тесты
-├── mobile/                      # React Native/Expo приложение
 ├── docs/                        # архитектура и ADR следующих лабораторных
-├── .env.example                # список переменных окружения
-├── compose.yaml                # backend и PostgreSQL одной командой
-└── CONTRIBUTING.md             # ветки и правила merge
+├── mobile/                      # React Native/Expo приложение
+├── .env.example                # пример переменных окружения
+├── .gitignore                  # исключения для Git
+├── compose.yaml                # backend и PostgreSQL
+├── CONTRIBUTING.md             # правила веток и Pull Request
+└── README.md                   # описание проекта и инструкции
 ```
 
 ## Переменные окружения
