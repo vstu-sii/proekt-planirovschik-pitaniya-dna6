@@ -1,0 +1,111 @@
+@startuml
+' Логическая ERD для MVP проекта «Планировщик питания»
+hide circle
+skinparam linetype ortho
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam entity {
+  BackgroundColor #F8FAFC
+  BorderColor #334155
+  FontColor #0F172A
+}
+
+entity "User" as users {
+  * user_id : UUID <<PK>>
+  --
+  email : VARCHAR
+  created_at : TIMESTAMP
+}
+
+entity "MealPlan" as plans {
+  * plan_id : UUID <<PK>>
+  --
+  user_id : UUID <<FK>>
+  goal : VARCHAR
+  budget_amount : DECIMAL
+  budget_currency : CHAR(3)
+  days_count : INT
+  max_cook_time_min : INT
+  status : VARCHAR
+  created_at : TIMESTAMP
+}
+
+entity "DietaryRestriction" as restrictions {
+  * restriction_id : UUID <<PK>>
+  --
+  user_id : UUID <<FK>>
+  name : VARCHAR
+  restriction_type : VARCHAR
+}
+
+entity "ExcludedProduct" as excluded {
+  * excluded_id : UUID <<PK>>
+  --
+  user_id : UUID <<FK>>
+  product_name : VARCHAR
+}
+
+entity "PantryItem" as pantry {
+  * pantry_item_id : UUID <<PK>>
+  --
+  user_id : UUID <<FK>>
+  product_id : UUID <<FK>>
+  amount_g : DECIMAL
+}
+
+entity "Product" as products {
+  * product_id : UUID <<PK>>
+  --
+  name : VARCHAR
+  price_per_kg : DECIMAL
+  calories_per_100g : DECIMAL
+  protein_per_100g : DECIMAL
+  fat_per_100g : DECIMAL
+  carbs_per_100g : DECIMAL
+}
+
+entity "DayPlan" as days {
+  * day_plan_id : UUID <<PK>>
+  --
+  plan_id : UUID <<FK>>
+  day_number : INT
+}
+
+entity "Meal" as meals {
+  * meal_id : UUID <<PK>>
+  --
+  day_plan_id : UUID <<FK>>
+  name : VARCHAR
+  meal_type : VARCHAR
+  cook_time_min : INT
+}
+
+entity "MealIngredient" as meal_ingredients {
+  * meal_ingredient_id : UUID <<PK>>
+  --
+  meal_id : UUID <<FK>>
+  product_id : UUID <<FK>>
+  amount_g : DECIMAL
+}
+
+entity "ShoppingListItem" as shopping {
+  * shopping_item_id : UUID <<PK>>
+  --
+  plan_id : UUID <<FK>>
+  product_id : UUID <<FK>>
+  amount_g : DECIMAL
+  estimated_cost : DECIMAL
+}
+
+users ||--o{ plans : creates
+users ||--o{ restrictions : configures
+users ||--o{ excluded : excludes
+users ||--o{ pantry : stores
+products ||--o{ pantry : stocked_as
+plans ||--|{ days : contains
+ days ||--|{ meals : contains
+meals ||--|{ meal_ingredients : uses
+products ||--o{ meal_ingredients : ingredient
+plans ||--o{ shopping : generates
+products ||--o{ shopping : item
+@enduml

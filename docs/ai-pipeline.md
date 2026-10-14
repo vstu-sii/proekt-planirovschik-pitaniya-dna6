@@ -12,30 +12,29 @@ AI-компонент получает структурированные пре
 
 ```plantuml
 @startuml
+left to right direction
 skinparam backgroundColor white
 skinparam shadowing false
 skinparam defaultFontName Arial
 skinparam monochrome false
-skinparam component {
+skinparam state {
   BackgroundColor #FEFEFE
   BorderColor #333333
   FontSize 12
 }
 
-left to right direction
-
-component "Client / Delivery API" as API
-component "1. Валидация входа\nPydantic / OpenAPI" as V
-component "2. Нормализация контекста\nцель, бюджет, дни, ограничения, pantry" as N
-component "3. Подготовка prompt\nDirect Prompt + JSON contract" as P
-component "4. GigaChat 2 Lite\nLLM generation" as LLM
-component "5. Parse JSON" as J
-component "6. Pydantic schema\nструктурная проверка" as S
-component "7. Python tools\nстоимость + КБЖУ + агрегирование" as T
-component "8. Constraint validation\nзапрещённые продукты, время, бюджет, pantry" as C
-component "9. Итоговый ответ\nMealPlanResponse" as R
-component "Logging / metrics\nrequest_id, latency, tokens, status" as LOG
-component "Error handler\n400 / 422 / 429 / 502 / 503 / 504" as E
+rectangle "Client / Delivery API" as API
+rectangle "1. Валидация входа\nPydantic / OpenAPI" as V
+rectangle "2. Нормализация контекста\nцель, бюджет, дни, ограничения, pantry" as N
+rectangle "3. Подготовка prompt\nDirect Prompt + JSON contract" as P
+rectangle "4. GigaChat 2 Lite\nLLM generation" as LLM
+rectangle "5. Parse JSON" as J
+rectangle "6. Pydantic schema\nструктурная проверка" as S
+rectangle "7. Python tools\nстоимость + КБЖУ + агрегирование" as T
+rectangle "8. Constraint validation\nзапрещённые продукты, время, бюджет, pantry" as C
+rectangle "9. Итоговый ответ\nMealPlanResponse" as R
+rectangle "Logging / metrics\nrequest_id, latency, tokens, status" as LOG
+rectangle "Error handler\n400 / 422 / 429 / 502 / 503 / 504" as E
 
 API --> V
 V --> N : valid
@@ -60,9 +59,9 @@ E --> LOG
 E --> API
 
 note bottom of P
-  Контекст ограничен текущим запросом.
-  История диалога, RAG и внешние документы
-  не входят в MVP.
+Контекст ограничен текущим запросом.
+История диалога, RAG и внешние документы
+не входят в MVP.
 end note
 @enduml
 ```
@@ -219,7 +218,7 @@ Use Cases, связанные с AI:
 - получить список покупок;
 - увидеть стоимость и КБЖУ.
 
-ERD должен хранить пользовательские параметры/план только на уровне, согласованном с общей моделью данных. AI-компонент не вводит собственную отдельную БД в MVP.
+Логическая ERD модели данных находится в [`docs/erd.md`](erd.md), исходник диаграммы — [`docs/erd.puml`](erd.puml). Она описывает постоянное хранение пользовательских параметров, планов, продуктов, pantry и списка покупок. AI-компонент не вводит собственную отдельную БД в MVP; ERD требует согласования с общей моделью данных команды.
 
 Golden dataset используется для evals и должен покрывать те же ограничения, которые проверяются в pipeline.
 
