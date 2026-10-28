@@ -6,8 +6,9 @@
 персональный план питания с учётом параметров пользователя, бюджета, целевого КБЖУ и
 ограничений по продуктам.
 
-Сейчас в репозитории находится каркас системы для лабораторной работы №1: нативный
-hello-world клиент, API, PostgreSQL и воспроизводимое серверное dev-окружение.
+В лабораторной работе №2 добавлены C4-диаграммы и архитектурная проверка, интерактивный
+UI-прототип, OpenAPI-контракт AI-эндпоинта, ERD, модели и начальная миграция базы данных,
+а также Compose-скелет будущей системы.
 
 ## Технологии
 
@@ -15,6 +16,9 @@ hello-world клиент, API, PostgreSQL и воспроизводимое се
 - Python и FastAPI — HTTP API;
 - PostgreSQL — хранение пользователей и планов питания;
 - Docker Compose — локальная разработка;
+- PlantUML и C4-PlantUML — архитектура и ERD как код;
+- aact — автоматическая проверка архитектурных правил;
+- Alembic и SQLAlchemy — схема данных и миграции;
 - GitHub Actions — lint, format, тесты и сборка.
 
 ## Быстрый запуск
@@ -39,6 +43,8 @@ Compose одной командой запускает:
 
 - FastAPI backend;
 - PostgreSQL;
+- применение миграций Alembic;
+- локальную заглушку AI-провайдера `llm-mock`;
 - health checks сервисов.
 
 После запуска доступны:
@@ -73,7 +79,9 @@ docker compose down --volumes
 
 Пользовательский клиент проекта разрабатывается как нативное мобильное приложение на React Native и Expo.
 
-В лабораторной работе №1 мобильный клиент представлен каркасом. CI проверяет форматирование, TypeScript и возможность собрать Android bundle. Запуск приложения на эмуляторе для проверки серверного hello-world не требуется.
+В лабораторной работе №2 мобильный клиент содержит интерактивный прототип трёх ключевых
+экранов. CI проверяет форматирование, TypeScript, Android bundle и web-export. Скриншоты
+хранятся рядом с описанием в [`mobile/docs`](mobile/docs/README.md).
 
 Локальные проверки мобильного каркаса:
 
@@ -84,9 +92,37 @@ npm run lint
 npm run format
 npm run typecheck
 npm run export:android
+npm run export:web
 ```
 
-Полноценный запуск интерфейса на Android-эмуляторе будет использоваться в следующих лабораторных работах.
+Для просмотра прототипа в браузере выполните `npm run web`.
+
+## Архитектура
+
+Система спроектирована как модульный монолит: мобильное приложение обращается к FastAPI,
+backend владеет PostgreSQL и вызывает внешний GigaChat API. Обоснование решения записано в
+[`ADR-004`](docs/adr/adr-04-modular-monolith.md).
+
+- [C4 Context](docs/architecture/context.puml);
+- [C4 Container](docs/architecture/container.puml);
+- [описание архитектуры и границ](docs/architecture/README.md);
+- [OpenAPI-контракт AI-эндпоинта](api/openapi.yaml).
+
+Машинная проверка архитектуры:
+
+```bash
+npm ci
+npm run architecture:check
+```
+
+Ожидаемый результат: `No violations found`.
+
+## Схема данных
+
+ERD находится в [`docs/data/erd.puml`](docs/data/erd.puml). Ей соответствуют SQLAlchemy-модели
+в `backend/app/db/models.py` и миграция `backend/migrations/versions/0001_initial_schema.py`.
+При запуске Compose миграции применяются автоматически до старта API.
+
 ## Структура репозитория
 
 ```text
@@ -95,13 +131,26 @@ npm run export:android
 │   ├── workflows/
 │   │   └── ci.yml               # CI для Pull Request
 │   └── pull_request_template.md # шаблон Pull Request
-├── backend/                     # FastAPI и backend-тесты
-├── docs/                        # архитектура и ADR следующих лабораторных
-├── mobile/                      # React Native/Expo приложение
+├── api/
+│   └── openapi.yaml             # контракт AI-эндпоинта
+├── backend/
+│   ├── app/db/                  # SQLAlchemy-модели
+│   ├── migrations/              # миграции Alembic
+│   └── tests/                   # backend-тесты
+├── docs/
+│   ├── adr/                     # архитектурные решения
+│   ├── architecture/            # C4 Context и Container
+│   └── data/                    # ERD и описание схемы
+├── mobile/
+│   ├── docs/screenshots/        # скриншоты UI-прототипа
+│   └── App.tsx                  # код ключевых экранов
+├── stubs/llm/                   # локальная заглушка AI-провайдера
 ├── .env.example                # пример переменных окружения
 ├── .gitignore                  # исключения для Git
-├── compose.yaml                # backend и PostgreSQL
+├── aact.config.ts              # правила проверки архитектуры
+├── compose.yaml                # полный dev-контур и health checks
 ├── CONTRIBUTING.md             # правила веток и Pull Request
+├── package.json                # команды архитектурной проверки
 └── README.md                   # описание проекта и инструкции
 ```
 
@@ -112,7 +161,8 @@ npm run export:android
 раздел README.
 
 `EXPO_PUBLIC_API_URL` задаёт адрес backend, доступный мобильному устройству.
-`LLM_API_KEY` оставлен пустым: в лабораторной №1 AI-интеграция является заглушкой.
+`LLM_BASE_URL` в dev-окружении указывает на `llm-mock`. `LLM_API_KEY` оставлен пустым и
+потребуется только при подключении реального провайдера. Секреты нельзя коммитить.
 
 ## Команда
 

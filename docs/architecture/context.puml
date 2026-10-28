@@ -1,0 +1,16 @@
+@startuml MealPlannerContext
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title Планировщик питания — C4 Context
+
+Person(user, "Пользователь", "Студент или человек, живущий один: хочет питаться в рамках бюджета и целей КБЖУ.")
+
+System(mealPlanner, "Планировщик питания", "Составляет недельный рацион, список покупок и предлагает замены с учётом бюджета, КБЖУ, запасов и ограничений.")
+
+System_Ext(gigaChat, "GigaChat API", "Генерирует семантическую заготовку меню и описания блюд.")
+
+Rel(user, mealPlanner, "Вводит параметры и получает план питания", "Мобильное приложение")
+Rel(mealPlanner, gigaChat, "Запрашивает варианты меню без персональных секретов", "HTTPS/JSON")
+
+SHOW_LEGEND()
+@enduml

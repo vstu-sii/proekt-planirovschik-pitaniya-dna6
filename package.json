@@ -1,0 +1,12 @@
+{
+  "name": "meal-planner-architecture",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": {
+    "architecture:check": "aact check",
+    "architecture:model": "aact model"
+  },
+  "devDependencies": {
+    "aact": "3.0.1"
+  }
+}
