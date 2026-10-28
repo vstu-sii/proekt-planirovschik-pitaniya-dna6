@@ -1,0 +1,29 @@
+{
+  "name": "meal-planner-mobile",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "dependencies": {
+    "expo": "~57.0.23",
+    "expo-status-bar": "~57.0.1",
+    "react": "19.2.3",
+    "react-native": "0.86.3"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.2",
+    "eslint": "^9.39.5",
+    "eslint-config-expo": "^57.0.2",
+    "prettier": "^3.9.7",
+    "typescript": "~6.0.3"
+  },
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "typecheck": "tsc --noEmit",
+    "export:android": "expo export --platform android --output-dir dist"
+  },
+  "private": true
+}

@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend lint and test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: pip install ".[dev]"
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: pytest
+
+  mobile:
+    name: Mobile lint, format and export
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format
+      - run: npm run typecheck
+      - run: npm run export:android
+
+  containers:
+    name: Container build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cp .env.example .env
+      - run: docker compose config --quiet
+      - run: docker compose build backend
