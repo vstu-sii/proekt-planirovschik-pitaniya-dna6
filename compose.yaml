@@ -1,27 +1,13 @@
 name: meal-planner
 
-services:
-  backend:
-    build:
-      context: ./backend
-    environment:
-      APP_ENV: ${APP_ENV:-development}
-      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://meal_planner:meal_planner@db:5432/meal_planner}
-      LLM_API_KEY: ${LLM_API_KEY:-}
-    ports:
-      - "${API_PORT:-8000}:8000"
-    volumes:
-      - ./backend:/app
-    depends_on:
-      db:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-      start_period: 5s
+x-backend-environment: &backend-environment
+  APP_ENV: ${APP_ENV:-development}
+  DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://meal_planner:meal_planner@db:5432/meal_planner}
+  LLM_BASE_URL: ${LLM_BASE_URL:-http://llm-mock:8080}
+  LLM_API_KEY: ${LLM_API_KEY:-}
+  LLM_TIMEOUT_SECONDS: ${LLM_TIMEOUT_SECONDS:-30}
 
+services:
   db:
     image: postgres:17-alpine
     environment:
@@ -30,11 +16,73 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-meal_planner}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
       timeout: 3s
       retries: 10
+      start_period: 5s
+
+  migrate:
+    build:
+      context: ./backend
+    command: ["alembic", "upgrade", "head"]
+    environment: *backend-environment
+    volumes:
+      - ./backend:/app
+    networks:
+      - data
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  llm-mock:
+    build:
+      context: ./stubs/llm
+    networks:
+      - app
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 3s
+
+  backend:
+    build:
+      context: ./backend
+    environment: *backend-environment
+    ports:
+      - "${API_PORT:-8000}:8000"
+    volumes:
+      - ./backend:/app
+    networks:
+      - app
+      - data
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+      llm-mock:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+networks:
+  app:
+    name: meal-planner-app
+  data:
+    name: meal-planner-data
+    internal: true
 
 volumes:
   postgres_data:
+    name: meal-planner-postgres-data

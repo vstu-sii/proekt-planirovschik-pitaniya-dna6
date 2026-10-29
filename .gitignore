@@ -5,11 +5,16 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 pip-build-env-*/
+build/
+*.egg-info/
 
 node_modules/
 dist/
+dist-web/
 *.tsbuildinfo
 .expo/
+.pw-browsers/
+.chrome-profile-*/
 android/
 ios/
 
