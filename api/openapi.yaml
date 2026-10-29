@@ -1,10 +1,10 @@
 openapi: 3.1.0
 info:
   title: Meal Planner AI API
-  version: 1.0.0
+  version: 1.2.0
   description: |
     Контракт AI-эндпоинтов MVP проекта «Планировщик питания».
-    AI использует GigaChat 2 Lite для смысловой генерации, а стоимость,
+    AI использует GigaChat 2 для смысловой генерации, а стоимость,
     КБЖУ и формальные ограничения проверяются программно.
 servers:
   - url: /
@@ -59,13 +59,39 @@ paths:
           content:
             application/json:
               schema: { $ref: '#/components/schemas/ErrorResponse' }
+  /api/v1/meal-plans/{plan_id}:
+    get:
+      tags: [AI Meal Planning]
+      summary: Получить сохранённый план питания
+      operationId: getMealPlan
+      parameters:
+        - name: plan_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Ранее созданный план питания
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MealPlanResponse'
+        '404':
+          description: План не найден
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
 components:
   schemas:
     MealPlanRequest:
       type: object
       additionalProperties: false
-      required: [goal, budget, days, restrictions, excluded_products, pantry, max_cook_time_min]
+      required: [profile, goal, budget, days, restrictions, excluded_products, pantry, max_cook_time_min]
       properties:
+        profile:
+          $ref: '#/components/schemas/UserProfile'
         goal:
           type: string
           minLength: 1
@@ -118,6 +144,19 @@ components:
           pattern: '^[A-Z]{3}$'
           description: ISO 4217 currency code.
           examples: [RUB]
+    UserProfile:
+      type: object
+      additionalProperties: false
+      required: [height_cm, weight_kg]
+      properties:
+        height_cm:
+          type: integer
+          minimum: 120
+          maximum: 230
+        weight_kg:
+          type: number
+          minimum: 35
+          maximum: 250
     PantryItem:
       type: object
       additionalProperties: false
@@ -210,7 +249,7 @@ components:
     PlanTotals:
       type: object
       additionalProperties: false
-      required: [cost, currency, calories, protein_g, fat_g, carbs_g]
+      required: [cost, currency, calories, protein_g, fat_g, carbs_g, target_calories_per_day]
       properties:
         cost:
           type: number
@@ -230,6 +269,10 @@ components:
         carbs_g:
           type: number
           minimum: 0
+        target_calories_per_day:
+          type: number
+          exclusiveMinimum: 0
+          description: Ориентир MVP, рассчитанный из веса и цели; не медицинская рекомендация.
     ValidationSummary:
       type: object
       additionalProperties: false
@@ -258,6 +301,8 @@ components:
             - service_unavailable
             - timeout
             - validation_failed_after_retry
+            - not_found
+            - internal_error
         message:
           type: string
         request_id:

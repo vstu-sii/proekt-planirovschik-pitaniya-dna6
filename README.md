@@ -6,9 +6,9 @@
 персональный план питания с учётом параметров пользователя, бюджета, целевого КБЖУ и
 ограничений по продуктам.
 
-В лабораторной работе №2 добавлены C4-диаграммы и архитектурная проверка, интерактивный
-UI-прототип, OpenAPI-контракт AI-эндпоинта, ERD, модели и начальная миграция базы данных,
-а также Compose-скелет будущей системы.
+В лабораторной работе №3 прототип стал системой: UI вызывает API, AI-провайдер формирует
+черновик меню, backend проверяет ограничения и рассчитывает показатели, а результат
+сохраняется в PostgreSQL. Весь контур вместе с трассировкой запускается одной командой.
 
 ## Технологии
 
@@ -36,7 +36,7 @@ cd proekt-planirovschik-pitaniya-dna6
 
 ```bash
 cp .env.example .env
-docker compose up --build
+docker compose -f compose.dev.yml up -d --build --wait
 ```
 
 Compose одной командой запускает:
@@ -45,15 +45,19 @@ Compose одной командой запускает:
 - PostgreSQL;
 - применение миграций Alembic;
 - локальную заглушку AI-провайдера `llm-mock`;
+- web-клиент `frontend`;
+- сервис сбора трасс `tracing`;
 - health checks сервисов.
 
 После запуска доступны:
 
 | Компонент | URL |
 |---|---|
-| Hello-world API | http://localhost:8000 |
+| Web-прототип | http://localhost:8080 |
+| API | http://localhost:8000 |
 | Swagger UI | http://localhost:8000/docs |
 | Health check | http://localhost:8000/health |
+| Трассы запросов | http://localhost:9411/traces |
 
 Ожидаемый ответ hello-world:
 
@@ -66,22 +70,22 @@ Compose одной командой запускает:
 Остановка окружения:
 
 ```bash
-docker compose down
+docker compose -f compose.dev.yml down
 ```
 
 Удаление локального тома базы данных:
 
 ```bash
-docker compose down --volumes
+docker compose -f compose.dev.yml down --volumes
 ```
 
 ## Мобильный клиент
 
 Пользовательский клиент проекта разрабатывается как нативное мобильное приложение на React Native и Expo.
 
-В лабораторной работе №2 мобильный клиент содержит интерактивный прототип трёх ключевых
-экранов. CI проверяет форматирование, TypeScript, Android bundle и web-export. Скриншоты
-хранятся рядом с описанием в [`mobile/docs`](mobile/docs/README.md).
+Клиент отправляет параметры в FastAPI и отображает сохранённый результат. Во время запроса
+показывается loading state, при сетевой или серверной ошибке — понятное сообщение и кнопка
+повтора. CI проверяет TypeScript, Android bundle и web-export.
 
 Локальные проверки мобильного каркаса:
 
@@ -95,7 +99,8 @@ npm run export:android
 npm run export:web
 ```
 
-Для просмотра прототипа в браузере выполните `npm run web`.
+Для отдельного запуска клиента выполните `npm run web`. Для интеграционной проверки
+используйте Compose и адрес `http://localhost:8080`.
 
 ## Архитектура
 
@@ -120,8 +125,13 @@ npm run architecture:check
 ## Схема данных
 
 ERD находится в [`docs/data/erd.puml`](docs/data/erd.puml). Ей соответствуют SQLAlchemy-модели
-в `backend/app/db/models.py` и миграция `backend/migrations/versions/0001_initial_schema.py`.
-При запуске Compose миграции применяются автоматически до старта API.
+в `backend/app/db/models.py` и миграции `backend/migrations/versions/`. Миграция `0002`
+добавляет сохранение готового валидированного ответа. Compose применяет миграции до старта API.
+
+## Агентная разработка
+
+Что было сгенерировано, какие командные материалы использованы и что исправлено при ревью,
+описано в [`docs/agent-development-report.md`](docs/agent-development-report.md).
 
 ## Структура репозитория
 
@@ -135,20 +145,26 @@ ERD находится в [`docs/data/erd.puml`](docs/data/erd.puml). Ей со�
 │   └── openapi.yaml             # контракт AI-эндпоинта
 ├── backend/
 │   ├── app/db/                  # SQLAlchemy-модели
+│   ├── app/services/            # AI provider, расчёты и сохранение
 │   ├── migrations/              # миграции Alembic
 │   └── tests/                   # backend-тесты
 ├── docs/
 │   ├── adr/                     # архитектурные решения
 │   ├── architecture/            # C4 Context и Container
-│   └── data/                    # ERD и описание схемы
+│   ├── data/                    # ERD и описание схемы
+│   ├── agent-development-report.md
+│   └── deployment.md
 ├── mobile/
 │   ├── docs/screenshots/        # скриншоты UI-прототипа
-│   └── App.tsx                  # код ключевых экранов
+│   ├── Dockerfile               # web-export для общего контура
+│   └── App.tsx                  # API, loading, error и result states
 ├── stubs/llm/                   # локальная заглушка AI-провайдера
+├── stubs/tracing/               # локальный сборщик трасс
 ├── .env.example                # пример переменных окружения
 ├── .gitignore                  # исключения для Git
 ├── aact.config.ts              # правила проверки архитектуры
 ├── compose.yaml                # полный dev-контур и health checks
+├── compose.dev.yml             # явный compose-файл для автопроверки
 ├── CONTRIBUTING.md             # правила веток и Pull Request
 ├── package.json                # команды архитектурной проверки
 └── README.md                   # описание проекта и инструкции
@@ -160,9 +176,10 @@ ERD находится в [`docs/data/erd.puml`](docs/data/erd.puml). Ей со�
 При добавлении новой переменной необходимо одновременно обновить `.env.example` и этот
 раздел README.
 
-`EXPO_PUBLIC_API_URL` задаёт адрес backend, доступный мобильному устройству.
-`LLM_BASE_URL` в dev-окружении указывает на `llm-mock`. `LLM_API_KEY` оставлен пустым и
-потребуется только при подключении реального провайдера. Секреты нельзя коммитить.
+`EXPO_PUBLIC_API_URL` задаёт адрес backend для Android, `WEB_API_URL` — для web-сборки.
+`AI_PROVIDER=http` использует `llm-mock`, `demo` работает автономно, `gigachat` требует
+секрет `GIGACHAT_CREDENTIALS`. `TRACE_COLLECTOR_URL` указывает на сервис трассировки.
+Секреты нельзя коммитить.
 
 ## Команда
 
@@ -181,35 +198,17 @@ ERD находится в [`docs/data/erd.puml`](docs/data/erd.puml). Ей со�
 
 ## Деплой
 
-Hello-world backend развёрнут на Render.
+Backend первой версии уже развёрнут на Render. После деплоя Lab 3 этот же адрес должен
+обслуживать настоящий API, а URL web-клиента будет добавлен в таблицу.
 
 | Компонент | Публичный URL |
 |---|---|
 | API | https://meal-planner-dna6-api.onrender.com |
 | Swagger UI | https://meal-planner-dna6-api.onrender.com/docs |
 | Health check | https://meal-planner-dna6-api.onrender.com/health |
+| Web-прототип | будет добавлен после создания Render Static Site |
 
-### Как выполнить деплой
-
-1. Создать на Render новый `Web Service`.
-2. Указать публичный GitHub-репозиторий проекта.
-3. Использовать следующие настройки:
-
-| Настройка | Значение |
-|---|---|
-| Branch | `lab1-delivery-initiation` |
-| Runtime | `Python 3` |
-| Root Directory | `backend` |
-| Build Command | `pip install .` |
-| Start Command | `uvicorn app.main:app --host 0.0.0.0 --port $PORT` |
-| Health Check Path | `/health` |
-
-4. Добавить переменную окружения:
-
-```env
-APP_ENV=production
-```
-
-5. Запустить создание Web Service и дождаться статуса `Live`.
+Полная инструкция для backend, PostgreSQL и Static Site находится в
+[`docs/deployment.md`](docs/deployment.md).
 
 Бесплатный экземпляр Render может переходить в спящий режим при отсутствии запросов, поэтому первое открытие после простоя иногда занимает некоторое время.

@@ -5,6 +5,7 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 pip-build-env-*/
+pip-*/
 build/
 *.egg-info/
 
