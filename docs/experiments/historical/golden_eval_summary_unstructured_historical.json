@@ -1,0 +1,16 @@
+{
+  "model": "GigaChat-2",
+  "dataset": "Golden Dataset",
+  "dataset_version": "1.0",
+  "total_cases": 44,
+  "successful_cases": 44,
+  "failed_cases": 0,
+  "api_success_rate_percent": 100.0,
+  "avg_latency_sec": 1.935,
+  "median_latency_sec": 1.554,
+  "min_latency_sec": 0.552,
+  "max_latency_sec": 6.751,
+  "json_valid_rate_percent": null,
+  "literal_must_contain_all_rate_percent": 0.0,
+  "literal_must_not_contain_all_rate_percent": 100.0
+}

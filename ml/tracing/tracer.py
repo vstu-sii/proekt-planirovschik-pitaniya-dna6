@@ -23,8 +23,9 @@ if Langfuse and os.getenv("LANGFUSE_PUBLIC_KEY") and os.getenv("LANGFUSE_SECRET_
 def trace_llm_call(**event):
     event = dict(event)
     event["timestamp"] = time.time()
-    # Prompt/response capture is opt-in to avoid persisting personal input by default.
-    capture_content = os.getenv("TRACE_CAPTURE_CONTENT", "false").lower() == "true"
+    # Lab 3 requires every LLM call to be auditable. Content capture is enabled by default;
+    # set TRACE_CAPTURE_CONTENT=false only when the input/response must not be persisted.
+    capture_content = os.getenv("TRACE_CAPTURE_CONTENT", "true").lower() == "true"
     if not capture_content:
         event.pop("prompt", None)
         event.pop("response", None)

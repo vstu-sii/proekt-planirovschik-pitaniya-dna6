@@ -1,7 +1,17 @@
 # LLM tracing
 
-Baseline writes one JSON object per LLM call to `artifacts/traces.jsonl`.
-Optional Langfuse mirroring is enabled when `LANGFUSE_PUBLIC_KEY` and
-`LANGFUSE_SECRET_KEY` are configured.
+Каждый вызов LLM записывается одной JSON-строкой в `artifacts/traces.jsonl` или в путь из `TRACE_PATH`.
 
-Secrets are never included in the trace payload.
+Для Lab 3 по умолчанию сохраняются:
+- `request_id`/`id`;
+- модель и номер попытки;
+- полный пользовательский prompt;
+- полный assistant response, если провайдер его вернул;
+- latency;
+- input/output/total tokens;
+- статус и результат валидации;
+- ошибка для неуспешного вызова.
+
+`TRACE_CAPTURE_CONTENT=true` включён по умолчанию, потому что критерий лабораторной требует видеть содержание каждого вызова. Если входные данные нельзя сохранять, установите `TRACE_CAPTURE_CONTENT=false`, но такой режим не подтверждает критерий содержательной трассировки.
+
+Секреты (`GIGACHAT_CREDENTIALS`, ключи Langfuse и HTTP-заголовки) в трассы не записываются.

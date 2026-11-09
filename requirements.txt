@@ -1,0 +1,6 @@
+gigachat
+pydantic>=2
+fastapi
+uvicorn
+pandas
+langfuse>=2

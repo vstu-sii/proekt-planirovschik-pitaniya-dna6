@@ -184,6 +184,10 @@ class GigaChatBaseline:
                         latency_sec=round(time.perf_counter() - started, 4),
                         status="error", error_type=type(exc).__name__,
                         error=str(exc)[:1000], prompt=user_prompt,
+                        response=locals().get("text"),
+                        input_tokens=locals().get("p"),
+                        output_tokens=locals().get("o"),
+                        total_tokens=locals().get("t"),
                         validation_status="failed_or_unavailable",
                     )
                 except Exception:
