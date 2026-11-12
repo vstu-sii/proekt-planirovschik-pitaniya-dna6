@@ -1,0 +1,27 @@
+name: Quality eval checks
+on:
+  push:
+    branches:
+      - lab3_quality-safety_prototype
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  eval-unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test dependencies
+        run: python -m pip install pytest
+      - name: Run offline eval tests
+        run: python -m pytest -q backend/tests/evals/test_eval_runner.py backend/tests/evals/test_analysis.py backend/tests/evals/test_golden_v2.py
+      - name: Enforce baseline threshold on committed snapshot
+        run: |
+          python -m backend.tests.evals.analyze_results --gate --min-response-rate 0.95 --min-structured-rate 0.95
+
+  # Live GigaChat eval is a separate protected workflow step to add once
+  # GitHub secrets and the AI Engineer environment are configured.
+  # Offline snapshot gate intentionally FAILS on current baseline (13/44).
