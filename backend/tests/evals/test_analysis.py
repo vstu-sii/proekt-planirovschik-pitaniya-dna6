@@ -11,4 +11,3 @@ def test_real_baseline_summary():
     assert summary["total"] == 44
     assert summary["received"] == 13
     assert summary["errors"] == 31
-
