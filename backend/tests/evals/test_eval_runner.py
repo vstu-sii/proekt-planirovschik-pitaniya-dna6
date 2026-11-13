@@ -1,10 +1,5 @@
 from pathlib import Path
-
-from backend.tests.evals.evaluate import (
-    evaluate_case,
-    load_dataset,
-)
-
+from backend.tests.evals.evaluate import evaluate_case, load_dataset
 
 ROOT = Path(__file__).resolve().parents[3]
 DATASET = ROOT / "docs/quality/golden-dataset/v1.jsonl"
