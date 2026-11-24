@@ -41,7 +41,7 @@
 | Приёмка по DoD | [docs/sprint-4/acceptance.md](docs/sprint-4/acceptance.md) |
 | Итоги прототипа и план | [docs/sprint-4/iteration-notes.md](docs/sprint-4/iteration-notes.md) |
 
-Burndown разделён: `burndown.md` содержит примечание о сжатых сроках, §2 «План и факт» и §3 «Анализ отклонений от плана»; `burndown-plan.md` хранит план на 70 SP; `burndown-fact.md` — факт G1–G3 (§1.1–1.3). Приёмка связана с фактом через §1–3 в `docs/sprint-4/acceptance.md`.
+Burndown разделён: `burndown.md` содержит примечание о сжатых сроках, §2 «План и факт» и §3 «Анализ отклонений от плана»; `burndown-plan.md` хранит план на 70 SP; `burndown-fact.md` — факт G1–G3 (§1–3). Приёмка связана с фактом через §1–3 в `docs/sprint-4/acceptance.md`.
 
 ## Качество и известные ограничения
 
