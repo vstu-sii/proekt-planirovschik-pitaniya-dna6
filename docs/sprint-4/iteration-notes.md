@@ -15,7 +15,7 @@ Safety-ограничения не проверяются (BUG-022), показ�
 
 Ключевые архитектурные изменения: отказ от RAG (работаем на фиксированной локальной БД «Мои продукты»), удаление UC-8 (расчет КБЖУ по фото, CV) и UC-9 (раздел «Коллекции») из скоупа MVP. Эти решения меняют не только объем, но и критерии приемки: из MVP уходят CV-пайплайн, векторный поиск и коллекции.
 
-PRD обновлен до версии v2. Правки синхронизированы с `bug-list.md`, `01-summary.md`, [eval-report-1.md](quality/eval-report-1.md) и [quality-sync-report.md](use-cases/validation-report/quality-sync-report.md).
+PRD обновлен до версии v2. Правки синхронизированы с `bug-list.md`, `01-summary.md`, [eval-report-1.md](../quality/eval-report-1.md) и [quality-sync-report.md](../use-cases/validation-report/quality-sync-report.md).
 
 ## 3. План спринта 4
 
