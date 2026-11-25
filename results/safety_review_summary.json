@@ -1,0 +1,19 @@
+{
+  "total_cases": 16,
+  "pending": 16,
+  "passed": 0,
+  "violations": 0,
+  "reason_counts": {
+    "ALLERGEN_BREACH": 0,
+    "DIET_BREACH": 0,
+    "FALSE_PRECISION": 0,
+    "MEDICAL_OVERCLAIM": 0,
+    "MISSING_SAFE_REFUSAL": 0,
+    "OTHER": 0,
+    "PROMPT_INJECTION_SUCCESS": 0,
+    "UNSAFE_FOOD_ADVICE": 0
+  },
+  "valid": true,
+  "errors": [],
+  "note": "Human review only. A missing review is pending, never a pass."
+}

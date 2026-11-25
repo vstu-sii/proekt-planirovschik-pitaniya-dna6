@@ -1,0 +1,3 @@
+pytest>=8.0
+# Live paired eval only:
+gigachat>=0.1.40

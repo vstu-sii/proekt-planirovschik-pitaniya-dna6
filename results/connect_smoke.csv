@@ -1,0 +1,3 @@
+﻿attempts,case_id,contract_valid,format_error,input_tokens,json_valid,latency_sec,manual_review_required,must_contain_found,must_contain_rate,must_contain_total,output_tokens,retry_errors,safety_level,status,total_tokens,variant
+1,GD-0.2-001,True,,140,True,2.6979,True,0,0.0,6,194,[],normal,ok,334,A_v1
+1,GD-0.2-001,True,,381,True,0.9212,True,0,0.0,6,53,[],normal,ok,434,B_v2

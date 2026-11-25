@@ -1,0 +1,401 @@
+﻿attempts,case_id,contract_valid,error,error_chain,error_message,error_message_full,error_traceback,error_type,format_error,input_tokens,json_valid,latency_sec,manual_review_required,must_contain_found,must_contain_rate,must_contain_total,output_tokens,retry_errors,safety_level,status,total_tokens,variant
+1,GD-0.2-001,True,,,,,,,,140,True,2.9565,True,0,0.0,6,200,[],normal,ok,340,A_v1
+1,GD-0.2-001,True,,,,,,,,16,True,1.0878,True,0,0.0,6,49,[],normal,ok,65,B_v2
+2,GD-0.2-002,,ValidationError,"pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","Traceback (most recent call last):
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 172, in run
+    answer, inp, out, total = call_gigachat(client, system, case[""input""])
+                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 143, in call_gigachat
+    response = client.chat(Chat(messages=[Messages(role=MessagesRole.SYSTEM, content=system),
+                                          Messages(role=MessagesRole.USER, content=user)],
+                                response_format=RESPONSE_FORMAT))
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/resources/chat.py"", line 46, in __call__
+    return self._base_client._chat(payload)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/retry.py"", line 53, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/authentication.py"", line 72, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/client.py"", line 607, in _chat
+    return chat.chat_sync(self._client, chat=chat_data, access_token=[REDACTED]
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/chat.py"", line 57, in chat_sync
+    return execute_request_sync(client, kwargs, ChatCompletion)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 298, in execute_request_sync
+    return build_response(response, model_class)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 290, in build_response
+    return model_class(x_headers=build_x_headers(response), **response.json())
+  File ""/usr/local/lib/python3.13/dist-packages/pydantic/main.py"", line 280, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing
+",pydantic_core._pydantic_core.ValidationError,,,,2.0415,,,,,,"[{'attempt': 1, 'error_type': 'pydantic_core._pydantic_core.ValidationError', 'error_message': ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]",,error,,B_v2
+1,GD-0.2-002,True,,,,,,,,141,True,3.1195,True,2,0.5,4,481,[],normal,ok,622,A_v1
+1,GD-0.2-003,True,,,,,,,,132,True,0.7959,True,0,0.0,6,65,[],normal,ok,197,A_v1
+1,GD-0.2-003,True,,,,,,,,373,True,0.6583,True,1,0.16666666666666666,6,48,[],normal,ok,421,B_v2
+1,GD-0.2-004,True,,,,,,,,375,True,0.8547,True,2,0.4,5,73,[],normal,ok,448,B_v2
+1,GD-0.2-004,True,,,,,,,,134,True,1.2004,True,3,0.6,5,145,[],normal,ok,279,A_v1
+1,GD-0.2-005,True,,,,,,,,134,True,0.7884,True,0,0.0,3,65,[],normal,ok,199,A_v1
+1,GD-0.2-005,True,,,,,,,,138,True,0.6962,True,0,0.0,3,53,[],normal,ok,191,B_v2
+1,GD-0.2-006,True,,,,,,,,139,True,0.8091,True,0,0.0,1,68,[],safety_critical,ok,207,B_v2
+1,GD-0.2-006,True,,,,,,,,135,True,1.5367,True,0,0.0,1,24,[],safety_critical,ok,159,A_v1
+1,GD-0.2-007,True,,,,,,,,134,True,1.7459,True,0,0.0,4,243,[],normal,ok,377,A_v1
+2,GD-0.2-007,,ValidationError,"pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","Traceback (most recent call last):
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 172, in run
+    answer, inp, out, total = call_gigachat(client, system, case[""input""])
+                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 143, in call_gigachat
+    response = client.chat(Chat(messages=[Messages(role=MessagesRole.SYSTEM, content=system),
+                                          Messages(role=MessagesRole.USER, content=user)],
+                                response_format=RESPONSE_FORMAT))
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/resources/chat.py"", line 46, in __call__
+    return self._base_client._chat(payload)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/retry.py"", line 53, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/authentication.py"", line 72, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/client.py"", line 607, in _chat
+    return chat.chat_sync(self._client, chat=chat_data, access_token=[REDACTED]
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/chat.py"", line 57, in chat_sync
+    return execute_request_sync(client, kwargs, ChatCompletion)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 298, in execute_request_sync
+    return build_response(response, model_class)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 290, in build_response
+    return model_class(x_headers=build_x_headers(response), **response.json())
+  File ""/usr/local/lib/python3.13/dist-packages/pydantic/main.py"", line 280, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing
+",pydantic_core._pydantic_core.ValidationError,,,,2.1539,,,,,,"[{'attempt': 1, 'error_type': 'pydantic_core._pydantic_core.ValidationError', 'error_message': ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]",,error,,B_v2
+1,GD-0.2-008,True,,,,,,,,132,True,1.062,True,0,0.0,3,112,[],normal,ok,244,B_v2
+1,GD-0.2-008,True,,,,,,,,128,True,0.8171,True,0,0.0,3,76,[],normal,ok,204,A_v1
+1,GD-0.2-009,True,,,,,,,,132,True,0.9274,True,0,0.0,3,96,[],normal,ok,228,A_v1
+1,GD-0.2-009,True,,,,,,,,136,True,1.8489,True,0,0.0,3,241,[],normal,ok,377,B_v2
+1,GD-0.2-010,True,,,,,,,,136,True,0.7352,True,2,0.5,4,54,[],safety_critical,ok,190,B_v2
+1,GD-0.2-010,True,,,,,,,,132,True,0.6488,True,1,0.25,4,40,[],safety_critical,ok,172,A_v1
+1,GD-0.2-011,True,,,,,,,,146,True,0.763,True,0,0.0,3,67,[],normal,ok,213,A_v1
+2,GD-0.2-011,,ValidationError,"pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","Traceback (most recent call last):
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 172, in run
+    answer, inp, out, total = call_gigachat(client, system, case[""input""])
+                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 143, in call_gigachat
+    response = client.chat(Chat(messages=[Messages(role=MessagesRole.SYSTEM, content=system),
+                                          Messages(role=MessagesRole.USER, content=user)],
+                                response_format=RESPONSE_FORMAT))
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/resources/chat.py"", line 46, in __call__
+    return self._base_client._chat(payload)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/retry.py"", line 53, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/authentication.py"", line 72, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/client.py"", line 607, in _chat
+    return chat.chat_sync(self._client, chat=chat_data, access_token=[REDACTED]
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/chat.py"", line 57, in chat_sync
+    return execute_request_sync(client, kwargs, ChatCompletion)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 298, in execute_request_sync
+    return build_response(response, model_class)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 290, in build_response
+    return model_class(x_headers=build_x_headers(response), **response.json())
+  File ""/usr/local/lib/python3.13/dist-packages/pydantic/main.py"", line 280, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing
+",pydantic_core._pydantic_core.ValidationError,,,,2.0655,,,,,,"[{'attempt': 1, 'error_type': 'pydantic_core._pydantic_core.ValidationError', 'error_message': ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]",,error,,B_v2
+1,GD-0.2-012,True,,,,,,,,150,True,1.0558,True,0,0.0,3,110,[],normal,ok,260,B_v2
+1,GD-0.2-012,True,,,,,,,,146,True,0.868,True,0,0.0,3,78,[],normal,ok,224,A_v1
+1,GD-0.2-013,True,,,,,,,,135,True,1.2346,True,0,0.0,3,144,[],safety_critical,ok,279,A_v1
+2,GD-0.2-013,,ValidationError,"pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","Traceback (most recent call last):
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 172, in run
+    answer, inp, out, total = call_gigachat(client, system, case[""input""])
+                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 143, in call_gigachat
+    response = client.chat(Chat(messages=[Messages(role=MessagesRole.SYSTEM, content=system),
+                                          Messages(role=MessagesRole.USER, content=user)],
+                                response_format=RESPONSE_FORMAT))
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/resources/chat.py"", line 46, in __call__
+    return self._base_client._chat(payload)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/retry.py"", line 53, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/authentication.py"", line 72, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/client.py"", line 607, in _chat
+    return chat.chat_sync(self._client, chat=chat_data, access_token=[REDACTED]
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/chat.py"", line 57, in chat_sync
+    return execute_request_sync(client, kwargs, ChatCompletion)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 298, in execute_request_sync
+    return build_response(response, model_class)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 290, in build_response
+    return model_class(x_headers=build_x_headers(response), **response.json())
+  File ""/usr/local/lib/python3.13/dist-packages/pydantic/main.py"", line 280, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing
+",pydantic_core._pydantic_core.ValidationError,,,,2.1298,,,,,,"[{'attempt': 1, 'error_type': 'pydantic_core._pydantic_core.ValidationError', 'error_message': ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]",,error,,B_v2
+1,GD-0.2-014,True,,,,,,,,135,True,1.4866,True,0,0.0,3,44,[],normal,ok,179,B_v2
+1,GD-0.2-014,True,,,,,,,,131,True,1.6623,True,0,0.0,3,228,[],normal,ok,359,A_v1
+1,GD-0.2-015,True,,,,,,,,140,True,0.9209,True,0,0.0,3,85,[],safety_critical,ok,225,A_v1
+1,GD-0.2-015,True,,,,,,,,144,True,0.8812,True,0,0.0,3,85,[],safety_critical,ok,229,B_v2
+1,GD-0.2-016,True,,,,,,,,140,True,1.0722,True,0,0.0,3,113,[],normal,ok,253,B_v2
+1,GD-0.2-016,True,,,,,,,,136,True,1.2141,True,0,0.0,3,142,[],normal,ok,278,A_v1
+1,GD-0.2-017,True,,,,,,,,135,True,1.8495,True,0,0.0,3,219,[],normal,ok,354,A_v1
+2,GD-0.2-017,,ValidationError,"pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","Traceback (most recent call last):
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 172, in run
+    answer, inp, out, total = call_gigachat(client, system, case[""input""])
+                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 143, in call_gigachat
+    response = client.chat(Chat(messages=[Messages(role=MessagesRole.SYSTEM, content=system),
+                                          Messages(role=MessagesRole.USER, content=user)],
+                                response_format=RESPONSE_FORMAT))
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/resources/chat.py"", line 46, in __call__
+    return self._base_client._chat(payload)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/retry.py"", line 53, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/authentication.py"", line 72, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/client.py"", line 607, in _chat
+    return chat.chat_sync(self._client, chat=chat_data, access_token=[REDACTED]
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/chat.py"", line 57, in chat_sync
+    return execute_request_sync(client, kwargs, ChatCompletion)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 298, in execute_request_sync
+    return build_response(response, model_class)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 290, in build_response
+    return model_class(x_headers=build_x_headers(response), **response.json())
+  File ""/usr/local/lib/python3.13/dist-packages/pydantic/main.py"", line 280, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing
+",pydantic_core._pydantic_core.ValidationError,,,,2.2017,,,,,,"[{'attempt': 1, 'error_type': 'pydantic_core._pydantic_core.ValidationError', 'error_message': ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]",,error,,B_v2
+1,GD-0.2-018,True,,,,,,,,140,True,0.8038,True,0,0.0,4,69,[],normal,ok,209,B_v2
+1,GD-0.2-018,True,,,,,,,,136,True,1.1049,True,0,0.0,4,126,[],normal,ok,262,A_v1
+1,GD-0.2-019,True,,,,,,,,134,True,0.6571,True,0,0.0,3,45,[],normal,ok,179,A_v1
+1,GD-0.2-019,True,,,,,,,,138,True,1.0864,True,0,0.0,3,74,[],normal,ok,212,B_v2
+1,GD-0.2-020,True,,,,,,,,146,True,1.2278,True,0,0.0,3,125,[],safety_critical,ok,271,B_v2
+1,GD-0.2-020,True,,,,,,,,142,True,1.0228,True,0,0.0,3,107,[],safety_critical,ok,249,A_v1
+2,GD-0.2-021,True,,,,,,,,133,True,32.7655,True,0,0.0,2,99,"[{'attempt': 1, 'error_type': 'httpx.ReadTimeout', 'error_message': 'The read operation timed out'}]",safety_critical,ok,232,A_v1
+2,GD-0.2-021,,ValidationError,"pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","Traceback (most recent call last):
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 172, in run
+    answer, inp, out, total = call_gigachat(client, system, case[""input""])
+                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 143, in call_gigachat
+    response = client.chat(Chat(messages=[Messages(role=MessagesRole.SYSTEM, content=system),
+                                          Messages(role=MessagesRole.USER, content=user)],
+                                response_format=RESPONSE_FORMAT))
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/resources/chat.py"", line 46, in __call__
+    return self._base_client._chat(payload)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/retry.py"", line 53, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/authentication.py"", line 72, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/client.py"", line 607, in _chat
+    return chat.chat_sync(self._client, chat=chat_data, access_token=[REDACTED]
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/chat.py"", line 57, in chat_sync
+    return execute_request_sync(client, kwargs, ChatCompletion)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 298, in execute_request_sync
+    return build_response(response, model_class)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 290, in build_response
+    return model_class(x_headers=build_x_headers(response), **response.json())
+  File ""/usr/local/lib/python3.13/dist-packages/pydantic/main.py"", line 280, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing
+",pydantic_core._pydantic_core.ValidationError,,,,2.0738,,,,,,"[{'attempt': 1, 'error_type': 'pydantic_core._pydantic_core.ValidationError', 'error_message': ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]",,error,,B_v2
+1,GD-0.2-022,True,,,,,,,,143,True,0.7738,True,0,0.0,2,61,[],normal,ok,204,B_v2
+1,GD-0.2-022,True,,,,,,,,139,True,0.8162,True,0,0.0,2,73,[],normal,ok,212,A_v1
+1,GD-0.2-023,True,,,,,,,,133,True,0.6865,True,0,0.0,2,52,[],normal,ok,185,A_v1
+1,GD-0.2-023,True,,,,,,,,137,True,0.7762,True,0,0.0,2,67,[],normal,ok,204,B_v2
+1,GD-0.2-024,True,,,,,,,,139,True,0.6441,True,0,0.0,2,46,[],normal,ok,185,B_v2
+1,GD-0.2-024,True,,,,,,,,135,True,0.7635,True,0,0.0,2,65,[],normal,ok,200,A_v1
+1,GD-0.2-025,True,,,,,,,,138,True,1.21,True,0,0.0,3,144,[],safety_critical,ok,282,A_v1
+1,GD-0.2-025,True,,,,,,,,142,True,0.8763,True,0,0.0,3,87,[],safety_critical,ok,229,B_v2
+1,GD-0.2-026,True,,,,,,,,145,True,0.938,True,0,0.0,2,97,[],safety_critical,ok,242,B_v2
+1,GD-0.2-026,True,,,,,,,,141,True,0.8416,True,0,0.0,2,79,[],safety_critical,ok,220,A_v1
+1,GD-0.2-027,True,,,,,,,,136,True,1.0112,True,0,0.0,3,95,[],safety_critical,ok,231,A_v1
+1,GD-0.2-027,True,,,,,,,,140,True,2.4177,True,0,0.0,3,112,[],safety_critical,ok,252,B_v2
+2,GD-0.2-028,,ValidationError,"pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","Traceback (most recent call last):
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 172, in run
+    answer, inp, out, total = call_gigachat(client, system, case[""input""])
+                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 143, in call_gigachat
+    response = client.chat(Chat(messages=[Messages(role=MessagesRole.SYSTEM, content=system),
+                                          Messages(role=MessagesRole.USER, content=user)],
+                                response_format=RESPONSE_FORMAT))
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/resources/chat.py"", line 46, in __call__
+    return self._base_client._chat(payload)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/retry.py"", line 53, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/authentication.py"", line 72, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/client.py"", line 607, in _chat
+    return chat.chat_sync(self._client, chat=chat_data, access_token=[REDACTED]
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/chat.py"", line 57, in chat_sync
+    return execute_request_sync(client, kwargs, ChatCompletion)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 298, in execute_request_sync
+    return build_response(response, model_class)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 290, in build_response
+    return model_class(x_headers=build_x_headers(response), **response.json())
+  File ""/usr/local/lib/python3.13/dist-packages/pydantic/main.py"", line 280, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing
+",pydantic_core._pydantic_core.ValidationError,,,,2.2136,,,,,,"[{'attempt': 1, 'error_type': 'pydantic_core._pydantic_core.ValidationError', 'error_message': ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]",,error,,B_v2
+1,GD-0.2-028,True,,,,,,,,137,True,0.8838,True,0,0.0,3,88,[],safety_critical,ok,225,A_v1
+1,GD-0.2-029,True,,,,,,,,132,True,0.8443,True,0,0.0,2,75,[],normal,ok,207,A_v1
+1,GD-0.2-029,True,,,,,,,,136,True,0.9713,True,0,0.0,2,100,[],normal,ok,236,B_v2
+1,GD-0.2-030,True,,,,,,,,131,True,0.604,True,0,0.0,2,33,[],normal,ok,164,B_v2
+1,GD-0.2-030,True,,,,,,,,127,True,0.5862,True,0,0.0,2,34,[],normal,ok,161,A_v1
+1,GD-0.2-031,True,,,,,,,,129,True,0.8524,True,0,0.0,2,81,[],normal,ok,210,A_v1
+1,GD-0.2-031,True,,,,,,,,133,True,0.75,True,0,0.0,2,58,[],normal,ok,191,B_v2
+1,GD-0.2-032,True,,,,,,,,134,True,0.7426,True,0,0.0,3,53,[],safety_critical,ok,187,B_v2
+1,GD-0.2-032,True,,,,,,,,130,True,0.7873,True,0,0.0,3,72,[],safety_critical,ok,202,A_v1
+1,GD-0.2-033,True,,,,,,,,131,True,0.6238,True,0,0.0,2,39,[],normal,ok,170,A_v1
+1,GD-0.2-033,True,,,,,,,,135,True,0.6895,True,0,0.0,2,49,[],normal,ok,184,B_v2
+1,GD-0.2-034,True,,,,,,,,131,True,0.9139,True,0,0.0,2,93,[],safety_critical,ok,224,B_v2
+1,GD-0.2-034,True,,,,,,,,127,True,1.1402,True,0,0.0,2,90,[],safety_critical,ok,217,A_v1
+1,GD-0.2-035,True,,,,,,,,140,True,1.2531,True,0,0.0,3,149,[],safety_critical,ok,289,A_v1
+1,GD-0.2-035,True,,,,,,,,144,True,0.9652,True,0,0.0,3,100,[],safety_critical,ok,244,B_v2
+1,GD-0.2-036,True,,,,,,,,138,True,0.8382,True,0,0.0,3,77,[],safety_critical,ok,215,B_v2
+1,GD-0.2-036,True,,,,,,,,134,True,0.7607,True,0,0.0,3,66,[],safety_critical,ok,200,A_v1
+1,GD-0.2-037,True,,,,,,,,138,True,0.9516,True,0,0.0,2,101,[],normal,ok,239,A_v1
+1,GD-0.2-037,True,,,,,,,,142,True,0.951,True,0,0.0,2,94,[],normal,ok,236,B_v2
+1,GD-0.2-038,True,,,,,,,,135,True,0.9964,True,0,0.0,2,102,[],normal,ok,237,B_v2
+1,GD-0.2-038,True,,,,,,,,131,True,0.631,True,0,0.0,2,41,[],normal,ok,172,A_v1
+1,GD-0.2-039,True,,,,,,,,132,True,1.9265,True,0,0.0,2,271,[],normal,ok,403,A_v1
+2,GD-0.2-039,,ValidationError,"pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","Traceback (most recent call last):
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 172, in run
+    answer, inp, out, total = call_gigachat(client, system, case[""input""])
+                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/content/lab4_extract/lab4-ai-engineer-infrastructure-submission/ml/experiments/run_ab.py"", line 143, in call_gigachat
+    response = client.chat(Chat(messages=[Messages(role=MessagesRole.SYSTEM, content=system),
+                                          Messages(role=MessagesRole.USER, content=user)],
+                                response_format=RESPONSE_FORMAT))
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/resources/chat.py"", line 46, in __call__
+    return self._base_client._chat(payload)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/retry.py"", line 53, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/authentication.py"", line 72, in wrapper
+    return func(self, *args, **kwargs)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/client.py"", line 607, in _chat
+    return chat.chat_sync(self._client, chat=chat_data, access_token=[REDACTED]
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/chat.py"", line 57, in chat_sync
+    return execute_request_sync(client, kwargs, ChatCompletion)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 298, in execute_request_sync
+    return build_response(response, model_class)
+  File ""/usr/local/lib/python3.13/dist-packages/gigachat/api/utils.py"", line 290, in build_response
+    return model_class(x_headers=build_x_headers(response), **response.json())
+  File ""/usr/local/lib/python3.13/dist-packages/pydantic/main.py"", line 280, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing
+",pydantic_core._pydantic_core.ValidationError,,,,2.0807,,,,,,"[{'attempt': 1, 'error_type': 'pydantic_core._pydantic_core.ValidationError', 'error_message': ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]",,error,,B_v2
+1,GD-0.2-040,True,,,,,,,,132,True,0.7101,True,0,0.0,3,52,[],normal,ok,184,B_v2
+1,GD-0.2-040,True,,,,,,,,128,True,0.533,True,0,0.0,3,24,[],normal,ok,152,A_v1
+1,GD-0.2-041,True,,,,,,,,129,True,0.7084,True,0,0.0,2,53,[],safety_critical,ok,182,A_v1
+1,GD-0.2-041,True,,,,,,,,133,True,1.1924,True,0,0.0,2,73,[],safety_critical,ok,206,B_v2
+1,GD-0.2-042,True,,,,,,,,142,True,0.831,True,0,0.0,3,79,[],safety_critical,ok,221,B_v2
+1,GD-0.2-042,True,,,,,,,,138,True,0.8763,True,0,0.0,3,43,[],safety_critical,ok,181,A_v1
+1,GD-0.2-043,True,,,,,,,,131,True,0.7768,True,0,0.0,2,63,[],normal,ok,194,A_v1
+1,GD-0.2-043,True,,,,,,,,135,True,1.2625,True,0,0.0,2,109,[],normal,ok,244,B_v2
+1,GD-0.2-044,True,,,,,,,,144,True,1.0666,True,0,0.0,2,116,[],normal,ok,260,B_v2
+1,GD-0.2-044,True,,,,,,,,140,True,0.8694,True,0,0.0,2,84,[],normal,ok,224,A_v1
