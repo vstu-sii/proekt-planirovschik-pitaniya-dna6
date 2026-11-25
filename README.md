@@ -4,7 +4,7 @@
 
 Планировщик питания – AI-ассистент для персонального планирования питания: меню под бюджет, КБЖУ, аллергены и продукты, которые уже есть дома.
 
-> **Актуальный этап:** Sprint 4 / Lab 4 – Production-ready инфраструктура.
+> **Актуальный этап:** Спринт 4 / Lab 4 – Production-ready инфраструктура.
 >
 > **Ветка:** `lab4-product-infrastructure`
 
@@ -12,7 +12,7 @@
 
 - **Проблема:** молодые люди, живущие отдельно, имеют конфликт бюджета, времени и здоровья. Ручной подсчет КБЖУ и планирование меню требуют слишком много ментальных ресурсов (подробнее см. `docs/prd.md`).
 - **ЦА:** молодые люди в съемной квартире/общежитии с ограниченным бюджетом на питание; в нарративе – Кирилл, 24 года, г. Волгоград, панкреатит (`docs/brief.md`).
-- **North Star:** к декабрю ≥40% активных пользователей завершают 4 недельных цикла планирования подряд (`docs/prd.md`).
+- **North Star:** ≥40% активных пользователей завершают 4 недельных цикла планирования подряд; уточнения v3 — окно 28 дней после приёмки G3 и 0 открытых P0 по UC-1–UC-3, пороги `Target >=40% / Guardrail 25-39% / Miss <25%`, до старта окна только proxy-замер ([docs/north-star.md](docs/north-star.md), [docs/prd.md](docs/prd.md)).
 - **SLO/SLA:** генерация меню – 95% успешных запросов <10 с, SLA 99% <15 с (`docs/prd.md`).
 - **Архитектура:** Direct Prompt + Structured JSON + Python tools; LLM формирует черновик, Python считает стоимость/КБЖУ и проверяет ограничения (`docs/adr/adr-01-ai-pipeline-architecture.md`).
 - **Модель:** GigaChat 2 Lite как основной адаптер; один retry при transient error; отказ – `503 Service Unavailable + request_id`, без mock-ответа `200` (`docs/adr/adr-02-model-selection.md`).
@@ -79,14 +79,14 @@ Baseline Quality (`docs/quality/lab3-eval-report.md`, `docs/quality/summary-full
 | --- | --- |
 | [docs/brief.md](docs/brief.md) | Бриф «итоговая картинка», нарратив North Star |
 | [docs/brief.pptx](docs/brief.pptx) | Презентация-бриф |
-| [docs/prd.md](docs/prd.md) | PRD v2: сегмент, боли, North Star, SLI/SLO/SLA, out of scope |
+| [docs/prd.md](docs/prd.md) | PRD v3: сегмент, боли, North Star, SLI/SLO/SLA, out of scope |
 | [docs/hypotheses.md](docs/hypotheses.md) | 5 фальсифицируемых гипотез и пороги опровержения |
 | [docs/insights.md](docs/insights.md) | Вопросы интервью и инсайты по пищевому поведению |
 | [docs/business-rules.md](docs/business-rules.md) | FACT / CONSTRAINT / ACTION / INFERENCE / COMPUTATION правила |
 | [docs/glossary.md](docs/glossary.md) | Глоссарий терминов проекта |
 | [docs/roadmap.md](docs/roadmap.md) | Вехи, MVP / Release 2.0, out of scope |
-| [docs/sprint-4/iteration-notes.md](docs/sprint-4/iteration-notes.md) | Итоги Sprint 3, техдолг, вопросы Q-01–Q-09, план Sprint 4 |
-| [docs/sprint-4/mvp-scope.md](docs/sprint-4/mvp-scope.md) | IN / CONDITIONAL / CUT Sprint 4 |
+| [docs/sprint-4/iteration-notes.md](docs/sprint-4/iteration-notes.md) | Итоги Спринта 3, техдолг, вопросы Q-01–Q-09, план Спринта 4 |
+| [docs/sprint-4/mvp-scope.md](docs/sprint-4/mvp-scope.md) | IN / CONDITIONAL / CUT Спринта 4 |
 | [docs/sprint-4/burndown.md](docs/sprint-4/burndown.md) | Сводка: План и факт, анализ отклонений |
 | [docs/sprint-4/burndown-plan.md](docs/sprint-4/burndown-plan.md) | План сгорания: 30 задач, 82 SP |
 | [docs/sprint-4/burndown-fact.md](docs/sprint-4/burndown-fact.md) | Факт сгорания по G1–G3 |
@@ -100,10 +100,10 @@ Baseline Quality (`docs/quality/lab3-eval-report.md`, `docs/quality/summary-full
 | [docs/use-cases/description/in-scope/use-case-1.md](docs/use-cases/description/in-scope/use-case-1.md) | UC-1. Настроить профиль |
 | [docs/use-cases/description/in-scope/use-case-2.md](docs/use-cases/description/in-scope/use-case-2.md) | UC-2. Пополнить локальную БД «Мои продукты» |
 | [docs/use-cases/description/in-scope/use-case-3.md](docs/use-cases/description/in-scope/use-case-3.md) | UC-3. Сгенерировать персонализированное меню |
-| [docs/use-cases/description/in-scope/use-case-4.md](docs/use-cases/description/in-scope/use-case-4.md) | UC-4. Заменить блюдо – в CUT Sprint 4 |
-| [docs/use-cases/description/in-scope/use-case-5.md](docs/use-cases/description/in-scope/use-case-5.md) | UC-5. Перенести меню – в CUT Sprint 4 |
-| [docs/use-cases/description/in-scope/use-case-6.md](docs/use-cases/description/in-scope/use-case-6.md) | UC-6. Рецепт из остатков – в CUT Sprint 4 |
-| [docs/use-cases/description/in-scope/use-case-7.md](docs/use-cases/description/in-scope/use-case-7.md) | UC-7. Быстрый ужин – в CUT Sprint 4 |
+| [docs/use-cases/description/backlog/use-case-4.md](docs/use-cases/description/backlog/use-case-4.md) | UC-4. Заменить блюдо – в CUT Спринта 4 |
+| [docs/use-cases/description/backlog/use-case-5.md](docs/use-cases/description/backlog/use-case-5.md) | UC-5. Перенести меню – в CUT Спринта 4 |
+| [docs/use-cases/description/backlog/use-case-6.md](docs/use-cases/description/backlog/use-case-6.md) | UC-6. Рецепт из остатков – в CUT Спринта 4 |
+| [docs/use-cases/description/backlog/use-case-7.md](docs/use-cases/description/backlog/use-case-7.md) | UC-7. Быстрый ужин – в CUT Спринта 4 |
 | [docs/use-cases/description/out-of-scope/use-case-8.md](docs/use-cases/description/out-of-scope/use-case-8.md) | UC-8. КБЖУ по фото, вне MVP |
 | [docs/use-cases/description/out-of-scope/use-case-9.md](docs/use-cases/description/out-of-scope/use-case-9.md) | UC-9. «Коллекции», вне MVP |
 | [docs/use-cases/diagrams/plantuml-full-v2.md](docs/use-cases/diagrams/plantuml-full-v2.md) | PlantUML-диаграмма UC1–UC7 |
@@ -160,7 +160,7 @@ Baseline Quality (`docs/quality/lab3-eval-report.md`, `docs/quality/summary-full
 
 ## Команда
 
-| Роль | Имя | Ответственность в Sprint 4 |
+| Роль | Имя | Ответственность в Спринте 4 |
 | --- | --- | --- |
 | PRODUCT / VO | Медведева С. | Скоуп, burndown, приемка, требования |
 | AI ENGINEER | Черепова А. | Промпты v2, evals, стоимость, инструменты |
