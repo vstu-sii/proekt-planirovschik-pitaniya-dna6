@@ -1,4 +1,18 @@
-**Версия:** v2 (09.11.2026)
+**Версия:** v3 (25.11.2026)
+
+## Статусы Спринта 4
+
+| UC | Статус | Ссылки |
+| --- | --- | --- |
+| UC-1 Настроить профиль | В скоупе, Частично | [acceptance.md](../../../sprint-4/acceptance.md) §1, §4; BUG-001, BUG-006, BUG-002, BUG-003, BUG-004, BUG-005, BUG-007, BUG-008, BUG-009 |
+| UC-2 Мои продукты | В скоупе, Частично | [acceptance.md](../../../sprint-4/acceptance.md) §1, §2, §4; BUG-010, BUG-011, BUG-012, BUG-013, BUG-014, BUG-015 |
+| UC-3 Сгенерировать меню | В скоупе, Блокер | [acceptance.md](../../../sprint-4/acceptance.md) §1-§3, §4; BUG-018, BUG-020, BUG-021, BUG-022, BUG-023, BUG-025, BUG-019, BUG-024, BUG-026, BUG-004, BUG-E1, BUG-E3, BUG-E4, INFRA-04, INFRA-05 |
+| UC-4 Заменить блюдо | Не в скоупе (CUT) | [mvp-scope.md](../../../sprint-4/mvp-scope.md) §3; [use-case-4.md](../backlog/use-case-4.md); BUG-027, BUG-028, BUG-029, BUG-030, BUG-031 |
+| UC-5 Перенести меню | Не в скоупе (CUT) | [mvp-scope.md](../../../sprint-4/mvp-scope.md) §3; [use-case-5.md](../backlog/use-case-5.md); BUG-032, BUG-033, BUG-034, BUG-035 |
+| UC-6 Рецепт из остатков | Не в скоупе (CUT) | [mvp-scope.md](../../../sprint-4/mvp-scope.md) §3; [use-case-6.md](../backlog/use-case-6.md); BUG-036, BUG-037, BUG-038, BUG-039, BUG-040 |
+| UC-7 Быстрый ужин | Не в скоупе (CUT) | [mvp-scope.md](../../../sprint-4/mvp-scope.md) §3; [use-case-7.md](../backlog/use-case-7.md); BUG-041, BUG-042, BUG-043, BUG-044 |
+| UC-8 Рассчитать КБЖУ по фото | Исключено из MVP | [prd.md](../../../prd.md), [mvp-scope.md](../../../sprint-4/mvp-scope.md) §3; [use-case-8.md](../out-of-scope/use-case-8.md); BUG-045, BUG-046, BUG-047 |
+| UC-9 Раздел «Коллекции» | Исключено из MVP | [prd.md](../../../prd.md), [mvp-scope.md](../../../sprint-4/mvp-scope.md) §3; [use-case-9.md](../out-of-scope/use-case-9.md); BUG-048, BUG-049, BUG-050 |
 
 **UC-1**. Настроить профиль
 **Основной актор.** Пользователь
