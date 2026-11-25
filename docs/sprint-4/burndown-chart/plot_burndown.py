@@ -76,7 +76,7 @@ def main() -> None:
     max_y = max(plan + [v for v in fact if v is not None])
     plt.ylim(0, max(10, ((max_y + 9) // 10) * 10))
     plt.ylabel("Остаток, SP")
-    plt.title("Sprint 4 burndown по гейтам")
+    plt.title("Burndown Спринта 4 по гейтам")
     plt.grid(alpha=0.3)
     plt.legend()
     plt.figtext(
