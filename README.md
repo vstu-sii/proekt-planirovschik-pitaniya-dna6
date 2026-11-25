@@ -24,10 +24,10 @@
 - **Период:** 23.11–11.12, 15 рабочих дней = 3 календарные недели.
 - **Гейты:** G1 23.11–27.11, G2 30.11–04.12, G3 07.12–11.12.
 - **Единица оценки:** SP, 1 SP = 2 ч.
-- **Базовый план:** 70 SP; план-линия `70 → 53 → 31 → 0 SP`.
-- **Факт G1 на 24.11:** 67 SP; принят DOC-01 (3 SP), 6 P0-задач на 14 SP остаются в бэклоге до 27.11.
+- **Базовый план:** 82 SP после переоценки 25.11 по delivery-answers; план-линия `82 → 65 → 33 → 0 SP`.
+- **Факт G1 на 24.11:** 79 SP; приняты DOC-01 и DOC-02 (3 SP), 6 P0-задач на 14 SP остаются в бэклоге до 27.11.
 - **IN:** UC-1 авторизация/профиль, UC-2 локальная БД «Мои продукты», UC-3 персонализированное меню.
-- **CONDITIONAL:** RES-01 мобильная верстка, RES-02 ручной ввод КБЖУ, RES-03 P1 UC-1, RES-04 P1 UC-2.
+- **CONDITIONAL:** RES-01 мобильная верстка, RES-02 ручной ввод КБЖУ, RES-03 P1 UC-1, RES-04 P1 UC-2 (BUG-014 переведён в базовый план G2).
 - **CUT:** UC-4 замена блюда, UC-5 перенос меню, UC-6 рецепт из остатков, UC-7 быстрый ужин, UC-8 КБЖУ по фото, UC-9 «Коллекции».
 
 Ключевые файлы спринта:
@@ -41,7 +41,7 @@
 | Приёмка по DoD | [docs/sprint-4/acceptance.md](docs/sprint-4/acceptance.md) |
 | Итоги прототипа и план | [docs/sprint-4/iteration-notes.md](docs/sprint-4/iteration-notes.md) |
 
-Burndown разделён: `burndown.md` содержит примечание о сжатых сроках, §2 «План и факт» и §3 «Анализ отклонений от плана»; `burndown-plan.md` хранит план на 70 SP; `burndown-fact.md` — факт G1–G3 (§1–3). Приёмка связана с фактом через §1–3 в `docs/sprint-4/acceptance.md`.
+Burndown разделён: `burndown.md` содержит примечание о сжатых сроках, §2 «План и факт» и §3 «Анализ отклонений от плана»; `burndown-plan.md` хранит план на 82 SP; `burndown-fact.md` — факт G1–G3 (§1–3). Приёмка связана с фактом через §1–3 в `docs/sprint-4/acceptance.md`.
 
 ## Качество и известные ограничения
 
@@ -73,7 +73,7 @@ Baseline Quality (`docs/quality/lab3-eval-report.md`, `docs/quality/summary-full
 | [docs/sprint-4/iteration-notes.md](docs/sprint-4/iteration-notes.md) | Итоги Sprint 3, техдолг, вопросы Q-01–Q-09, план Sprint 4 |
 | [docs/sprint-4/mvp-scope.md](docs/sprint-4/mvp-scope.md) | IN / CONDITIONAL / CUT Sprint 4 |
 | [docs/sprint-4/burndown.md](docs/sprint-4/burndown.md) | Сводка: План и факт, анализ отклонений |
-| [docs/sprint-4/burndown-plan.md](docs/sprint-4/burndown-plan.md) | План сгорания: 25 задач, 70 SP |
+| [docs/sprint-4/burndown-plan.md](docs/sprint-4/burndown-plan.md) | План сгорания: 30 задач, 82 SP |
 | [docs/sprint-4/burndown-fact.md](docs/sprint-4/burndown-fact.md) | Факт сгорания по G1–G3 |
 | [docs/sprint-4/acceptance.md](docs/sprint-4/acceptance.md) | Приёмка инкрементов по гейтам и DoD |
 
