@@ -1,6 +1,6 @@
 **Версия:** v2 (09.11.2026) - без изменений относительно v1
 
-**Статус Sprint 4:** Не в скоупе (CUT). Возврат после UC-4, UC-5. Ссылки: [mvp-scope.md](../../../sprint-4/mvp-scope.md) §3, [acceptance.md](../../../sprint-4/acceptance.md) §4 (в Sprint 4 не принимается); BUG-036, BUG-037, BUG-038, BUG-039, BUG-040.
+**Статус Спринт 4:** Не в скоупе (CUT). Возврат после UC-4, UC-5. Ссылки: [mvp-scope.md](../../../sprint-4/mvp-scope.md) §3, [acceptance.md](../../../sprint-4/acceptance.md) §4 (в Спринт 4 не принимается); BUG-036, BUG-037, BUG-038, BUG-039, BUG-040.
 
 **Не реализовано в MVP (Спринт 4)**
 

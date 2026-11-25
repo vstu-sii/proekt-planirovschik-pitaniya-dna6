@@ -1,6 +1,6 @@
 **Версия:** v2 (09.11.2026) - без изменений относительно v1
 
-**Статус Sprint 4:** Не в скоупе (CUT). Возврат в Релизе 2.0. Ссылки: [mvp-scope.md](../../../sprint-4/mvp-scope.md) §3, [acceptance.md](../../../sprint-4/acceptance.md) §4 (в Sprint 4 не принимается); BUG-041, BUG-042, BUG-043, BUG-044.
+**Статус Спринт 4:** Не в скоупе (CUT). Возврат в Релизе 2.0. Ссылки: [mvp-scope.md](../../../sprint-4/mvp-scope.md) §3, [acceptance.md](../../../sprint-4/acceptance.md) §4 (в Спринт 4 не принимается); BUG-041, BUG-042, BUG-043, BUG-044.
 
 **Не реализовано в MVP (Спринт 4)**
 
