@@ -10,8 +10,8 @@
 
 ## Что важно знать о проекте
 
-- **Проблема:** молодые люди, живущие отдельно, конфликтуют между бюджетом, временем и здоровьем; ручной подсчёт КБЖУ и планирование меню требуют слишком много ресурса (`docs/prd.md`).
-- **ЦА:** молодые люди в съёмной квартире/общежитии с ограниченным бюджетом на питание; в нарративе — Кирилл, 24 года, Волгоград, панкреатит (`docs/brief.md`).
+- **Проблема:** молодые люди, живущие отдельно, конфликтуют между бюджетом, временем и здоровьем; ручной подсчет КБЖУ и планирование меню требуют слишком много ресурса (`docs/prd.md`).
+- **ЦА:** молодые люди в съемной квартире/общежитии с ограниченным бюджетом на питание; в нарративе — Кирилл, 24 года, Волгоград, панкреатит (`docs/brief.md`).
 - **North Star:** к декабрю ≥40% активных пользователей завершают 4 недельных цикла планирования подряд (`docs/prd.md`).
 - **SLO/SLA:** генерация меню — 95% успешных запросов <10 с, SLA 99% <15 с (`docs/prd.md`).
 - **Архитектура:** Direct Prompt + Structured JSON + Python tools; LLM формирует черновик, Python считает стоимость/КБЖУ и проверяет ограничения (`docs/adr/adr-01-ai-pipeline-architecture.md`).
@@ -27,10 +27,24 @@
 - **Базовый план:** 82 SP после переоценки 25.11 по delivery-answers; план-линия `82 → 65 → 33 → 0 SP`.
 - **Факт G1 на 24.11:** 79 SP; приняты DOC-01 и DOC-02 (3 SP), 6 P0-задач на 14 SP остаются в бэклоге до 27.11.
 - **IN:** UC-1 авторизация/профиль, UC-2 локальная БД «Мои продукты», UC-3 персонализированное меню.
-- **CONDITIONAL:** RES-01 мобильная верстка, RES-02 ручной ввод КБЖУ, RES-03 P1 UC-1, RES-04 P1 UC-2 (BUG-014 переведён в базовый план G2).
+- **CONDITIONAL:** RES-01 мобильная верстка, RES-02 ручной ввод КБЖУ, RES-03 P1 UC-1, RES-04 P1 UC-2 (BUG-014 переведен в базовый план G2).
 - **CUT:** UC-4 замена блюда, UC-5 перенос меню, UC-6 рецепт из остатков, UC-7 быстрый ужин, UC-8 КБЖУ по фото, UC-9 «Коллекции».
 
 Ключевые файлы спринта:
+
+#### Для работы со скриптом `plot_burndown.py`:
+1. Зависимости
+`python -m pip install matplotlib`
+
+2. Запуск из корня репозитория:
+`python docs/sprint-4/burndown-chart/plot_burndown.py`
+
+3. Результат 
+Создается файл `docs/sprint-4/burndown-chart/burndown-chart-vN.png`, где N берется как следующее значение по уже существующим `v*.png` в этой папке; на графике добавляется подпись с датой генерации: `Сгенерировано: DD.MM`.
+
+4. Обновление данных
+При добавлении нового факта в `burndown-fact.md` 
+??? правьте в docs/sprint-4/burndown-chart/plot_burndown.py массивы labels, plan, fact по burndown-plan.md:74-78 и burndown-fact.md.
 
 | Тема | Документ |
 | --- | --- |
@@ -38,10 +52,10 @@
 | Сводка burndown | [docs/sprint-4/burndown.md](docs/sprint-4/burndown.md) |
 | План burndown | [docs/sprint-4/burndown-plan.md](docs/sprint-4/burndown-plan.md) |
 | Факт burndown | [docs/sprint-4/burndown-fact.md](docs/sprint-4/burndown-fact.md) |
-| Приёмка по DoD | [docs/sprint-4/acceptance.md](docs/sprint-4/acceptance.md) |
+| Приемка по DoD | [docs/sprint-4/acceptance.md](docs/sprint-4/acceptance.md) |
 | Итоги прототипа и план | [docs/sprint-4/iteration-notes.md](docs/sprint-4/iteration-notes.md) |
 
-Burndown разделён: `burndown.md` содержит примечание о сжатых сроках, §2 «План и факт» и §3 «Анализ отклонений от плана»; `burndown-plan.md` хранит план на 82 SP; `burndown-fact.md` — факт G1–G3 (§1–3). Приёмка связана с фактом через §1–3 в `docs/sprint-4/acceptance.md`.
+Burndown разделен: `burndown.md` содержит примечание о сжатых сроках, §2 «План и факт» и §3 «Анализ отклонений от плана»; `burndown-plan.md` хранит план на 82 SP; `burndown-fact.md` — факт G1–G3 (§1–3). Приемка связана с фактом через §1–3 в `docs/sprint-4/acceptance.md`.
 
 ## Качество и известные ограничения
 
@@ -52,7 +66,7 @@ Baseline Quality (`docs/quality/lab3-eval-report.md`, `docs/quality/summary-full
 - Safety-critical: 16 кейсов; ответ получен только в 2, ошибка в 14.
 - Средняя задержка 3,2641 с, p95 15,2794 с — только по 13 полученным ответам.
 - `budget_accuracy`, `nutrition_accuracy`, `allergen_compliance`, `critical_violations_verified` не подтверждены; `null` означает «не проверено», а не «нарушений нет».
-- Показатель 43/44 из отчёта AI Engineer относится к другому прогону и не заменяет 13/44 (`docs/use-cases/validation-report/ai-engineer-answers.md`).
+- Показатель 43/44 из отчета AI Engineer относится к другому прогону и не заменяет 13/44 (`docs/use-cases/validation-report/ai-engineer-answers.md`).
 
 Главный реестр находок прототипа — `docs/use-cases/validation-report/bug-list.md`: 50 находок, из них 17 P0, 22 P1, 11 P2. Валидация 9 UC: полностью не работает ни один, 3 частично, 6 не реализованы (`docs/use-cases/validation-report/01-summary.md`).
 
@@ -75,7 +89,7 @@ Baseline Quality (`docs/quality/lab3-eval-report.md`, `docs/quality/summary-full
 | [docs/sprint-4/burndown.md](docs/sprint-4/burndown.md) | Сводка: План и факт, анализ отклонений |
 | [docs/sprint-4/burndown-plan.md](docs/sprint-4/burndown-plan.md) | План сгорания: 30 задач, 82 SP |
 | [docs/sprint-4/burndown-fact.md](docs/sprint-4/burndown-fact.md) | Факт сгорания по G1–G3 |
-| [docs/sprint-4/acceptance.md](docs/sprint-4/acceptance.md) | Приёмка инкрементов по гейтам и DoD |
+| [docs/sprint-4/acceptance.md](docs/sprint-4/acceptance.md) | Приемка инкрементов по гейтам и DoD |
 
 ### Use cases и диаграммы
 
@@ -118,7 +132,7 @@ Baseline Quality (`docs/quality/lab3-eval-report.md`, `docs/quality/summary-full
 | [docs/adr/adr-02-model-selection.md](docs/adr/adr-02-model-selection.md) | Выбор и интеграция GigaChat 2 Lite |
 | [docs/adr/adr-03-security-boundaries.md](docs/adr/adr-03-security-boundaries.md) | Границы безопасности AI-компонента |
 | [docs/adr/adr-template.md](docs/adr/adr-template.md) | Шаблон ADR |
-| [docs/quality/eval-report-1.md](docs/quality/eval-report-1.md) | Отчёт «где врём»: 44 кейса, 13/44 ответов |
+| [docs/quality/eval-report-1.md](docs/quality/eval-report-1.md) | Отчет «где врем»: 44 кейса, 13/44 ответов |
 | [docs/quality/lab3-eval-report.md](docs/quality/lab3-eval-report.md) | Технический baseline Quality и приоритетные действия |
 | [docs/quality/summary-full-v1.json](docs/quality/summary-full-v1.json) | Машиночитаемые метрики baseline |
 | [docs/quality/baseline-full-v1.jsonl](docs/quality/baseline-full-v1.jsonl) | Сырые 44 кейса прогона от 05.11 |
@@ -142,7 +156,7 @@ Baseline Quality (`docs/quality/lab3-eval-report.md`, `docs/quality/summary-full
 - `README.md` — этот файл.
 - `.env` — локальные переменные окружения; значения не публикуются.
 
-Целевые артефакты инфраструктуры из `docs/tasks/lab4.md` — `.github/workflows/deploy.yml`, `.github/workflows/quality-gates.yml`, `compose.staging.yml`, `monitoring/`, `tests/`, `backend/limits/`, `backend/guards/` — в этой ветке ещё не созданы и описаны только в задании.
+Целевые артефакты инфраструктуры из `docs/tasks/lab4.md` — `.github/workflows/deploy.yml`, `.github/workflows/quality-gates.yml`, `compose.staging.yml`, `monitoring/`, `tests/`, `backend/limits/`, `backend/guards/` — в этой ветке еще не созданы и описаны только в задании.
 
 ## Как читать документацию
 
@@ -156,7 +170,7 @@ Baseline Quality (`docs/quality/lab3-eval-report.md`, `docs/quality/summary-full
 
 | Роль | Имя | Ответственность в Sprint 4 |
 | --- | --- | --- |
-| PRODUCT / VO | Медведева С. | Скоуп, burndown, приёмка, требования |
+| PRODUCT / VO | Медведева С. | Скоуп, burndown, приемка, требования |
 | AI ENGINEER | Черепова А. | Промпты v2, evals, стоимость, инструменты |
 | DELIVERY | Карпов Р. | CI/CD, staging, observability, лимиты |
 | QUALITY & SAFETY | Карпова М. | Quality-gates, атаки, тесты критических путей |
@@ -164,7 +178,7 @@ Baseline Quality (`docs/quality/lab3-eval-report.md`, `docs/quality/summary-full
 ## Известные расхождения в документации
 
 - `docs/tasks/lab4.md` описывает 28 дней / недели 7–10, а продуктовые файлы Sprint 4 используют сжатый период 23.11–11.12 и 3 гейта.
-- `docs/roadmap.md` всё ещё включает UC-4–UC-5 в MVP; актуальный скоуп — `docs/sprint-4/mvp-scope.md` (UC-1–UC-3).
+- `docs/roadmap.md` все еще включает UC-4–UC-5 в MVP; актуальный скоуп — `docs/sprint-4/mvp-scope.md` (UC-1–UC-3).
 - В старых разделах глоссария и UC встречается RAG; PRD v2 и ADR фиксируют отказ от RAG в MVP.
 - `43/44` (AI Engineer) и `13/44` (Quality) — разные прогоны, не следует их вычитать или смешивать.
 - Часть ссылок на отсутствующие файлы (`docs/model-candidates.md`, `docs/quality/golden-dataset/v1.jsonl`, `docs/quality/threat-model.md`) осталась из предыдущих лабораторных; в текущем `docs/` этих файлов нет.
