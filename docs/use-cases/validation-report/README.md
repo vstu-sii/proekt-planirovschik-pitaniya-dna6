@@ -13,4 +13,4 @@
 | [04-not-tested.md](04-not-tested.md)               | Что не проверено и почему                                                                   |
 | [05-changes.md](05-changes.md)                     | Правки UC                                                                                   |
 | [06-e2e.md](06-e2e.md)                             | Сквозной E2E-прогон UC: где оборвался сценарий и статус                                     |
-| [description/in-scope](../description/in-scope/)   | Актуальные UC v2: use-case-1.md…use-case-7.md                                               |
+| [description/in-scope](../description/01-in-scope/)   | Актуальные UC v2: use-case-1.md…use-case-7.md                                               |

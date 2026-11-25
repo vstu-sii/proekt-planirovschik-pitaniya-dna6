@@ -2,7 +2,7 @@
 
 **Версия**: v2 после валидации на прототипе и пересмотра скоупа MVP, 09.11.2026.
 
-**Источники:** [03-surprises.md](03-surprises.md), [bug-list.md](bug-list.md), [01-summary.md](01-summary.md), [02-breaks.md](02-breaks.md), [04-not-tested.md](04-not-tested.md), [glossary.md](../../glossary.md), [prd.md](../../prd.md), [use-cases-list.md](../description/in-scope/use-cases-list.md) (v2).
+**Источники:** [03-surprises.md](03-surprises.md), [bug-list.md](bug-list.md), [01-summary.md](01-summary.md), [02-breaks.md](02-breaks.md), [04-not-tested.md](04-not-tested.md), [glossary.md](../../glossary.md), [prd.md](../../prd.md), [use-cases-list.md](../description/01-in-scope/use-cases-list.md) (v2).
 
 ## Сводка изменений
 

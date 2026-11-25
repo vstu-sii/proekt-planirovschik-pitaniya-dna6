@@ -96,16 +96,16 @@ Baseline Quality (`docs/quality/lab3-eval-report.md`, `docs/quality/summary-full
 
 | Файл | Назначение |
 | --- | --- |
-| [docs/use-cases/description/in-scope/use-cases-list.md](docs/use-cases/description/in-scope/use-cases-list.md) | Сводный список UC v2 |
-| [docs/use-cases/description/in-scope/use-case-1.md](docs/use-cases/description/in-scope/use-case-1.md) | UC-1. Настроить профиль |
-| [docs/use-cases/description/in-scope/use-case-2.md](docs/use-cases/description/in-scope/use-case-2.md) | UC-2. Пополнить локальную БД «Мои продукты» |
-| [docs/use-cases/description/in-scope/use-case-3.md](docs/use-cases/description/in-scope/use-case-3.md) | UC-3. Сгенерировать персонализированное меню |
-| [docs/use-cases/description/backlog/use-case-4.md](docs/use-cases/description/backlog/use-case-4.md) | UC-4. Заменить блюдо – в CUT Спринта 4 |
-| [docs/use-cases/description/backlog/use-case-5.md](docs/use-cases/description/backlog/use-case-5.md) | UC-5. Перенести меню – в CUT Спринта 4 |
-| [docs/use-cases/description/backlog/use-case-6.md](docs/use-cases/description/backlog/use-case-6.md) | UC-6. Рецепт из остатков – в CUT Спринта 4 |
-| [docs/use-cases/description/backlog/use-case-7.md](docs/use-cases/description/backlog/use-case-7.md) | UC-7. Быстрый ужин – в CUT Спринта 4 |
-| [docs/use-cases/description/out-of-scope/use-case-8.md](docs/use-cases/description/out-of-scope/use-case-8.md) | UC-8. КБЖУ по фото, вне MVP |
-| [docs/use-cases/description/out-of-scope/use-case-9.md](docs/use-cases/description/out-of-scope/use-case-9.md) | UC-9. «Коллекции», вне MVP |
+| [docs/use-cases/description/in-scope/use-cases-list.md](docs/use-cases/description/01-in-scope/use-cases-list.md) | Сводный список UC v2 |
+| [docs/use-cases/description/in-scope/use-case-1.md](docs/use-cases/description/01-in-scope/use-case-1.md) | UC-1. Настроить профиль |
+| [docs/use-cases/description/in-scope/use-case-2.md](docs/use-cases/description/01-in-scope/use-case-2.md) | UC-2. Пополнить локальную БД «Мои продукты» |
+| [docs/use-cases/description/in-scope/use-case-3.md](docs/use-cases/description/01-in-scope/use-case-3.md) | UC-3. Сгенерировать персонализированное меню |
+| [docs/use-cases/description/backlog/use-case-4.md](docs/use-cases/description/02-backlog/use-case-4.md) | UC-4. Заменить блюдо – в CUT Спринта 4 |
+| [docs/use-cases/description/backlog/use-case-5.md](docs/use-cases/description/02-backlog/use-case-5.md) | UC-5. Перенести меню – в CUT Спринта 4 |
+| [docs/use-cases/description/backlog/use-case-6.md](docs/use-cases/description/02-backlog/use-case-6.md) | UC-6. Рецепт из остатков – в CUT Спринта 4 |
+| [docs/use-cases/description/backlog/use-case-7.md](docs/use-cases/description/02-backlog/use-case-7.md) | UC-7. Быстрый ужин – в CUT Спринта 4 |
+| [docs/use-cases/description/out-of-scope/use-case-8.md](docs/use-cases/description/03-out-of-scope/use-case-8.md) | UC-8. КБЖУ по фото, вне MVP |
+| [docs/use-cases/description/out-of-scope/use-case-9.md](docs/use-cases/description/03-out-of-scope/use-case-9.md) | UC-9. «Коллекции», вне MVP |
 | [docs/use-cases/diagrams/plantuml-full-v2.md](docs/use-cases/diagrams/plantuml-full-v2.md) | PlantUML-диаграмма UC1–UC7 |
 
 ### validation report

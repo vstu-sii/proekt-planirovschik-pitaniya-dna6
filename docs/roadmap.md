@@ -2,7 +2,7 @@
 
 > [!NOTE]
 > Актуализировано 25.11.2026 по итогам Спринта 4.
-> Источники: [prd.md](prd.md), [north-star.md](north-star.md), [sprint-4/mvp-scope.md](sprint-4/mvp-scope.md), [sprint-4/burndown.md](sprint-4/burndown.md), [sprint-4/acceptance.md](sprint-4/acceptance.md), [use-cases/description/in-scope/use-cases-list.md](use-cases/description/in-scope/use-cases-list.md), [use-cases/validation-report/bug-list.md](use-cases/validation-report/bug-list.md).
+> Источники: [prd.md](prd.md), [north-star.md](north-star.md), [sprint-4/mvp-scope.md](sprint-4/mvp-scope.md), [sprint-4/burndown.md](sprint-4/burndown.md), [sprint-4/acceptance.md](sprint-4/acceptance.md), [use-cases/description/in-scope/use-cases-list.md](use-cases/description/01-in-scope/use-cases-list.md), [use-cases/validation-report/bug-list.md](use-cases/validation-report/bug-list.md).
 
 ## MVP (Спринт 4, текущий фокус)
 
