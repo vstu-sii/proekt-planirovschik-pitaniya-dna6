@@ -5,14 +5,14 @@
 >
 > Факт G1 указан по состоянию на **24.11**; G2 и G3 — план приёмки.
 >
-> Факт сгорания разбит по гейтам: `burndown-fact.md` §1.1–1.3; сводка — `burndown.md` §2–3.
+> Факт сгорания разбит по гейтам: `burndown-fact.md` §1–3; сводка — `burndown.md` §2–3.
 
 | Поле                   | Значение                                                                                            |
 | ---------------------- | --------------------------------------------------------------------------------------------------- |
 | Спринт                 | Спринт 4 (Лабораторная работа 4)                                                                    |
 | Владелец приемки       | PRODUCT / VO                                                                                        |
 | Период                 | 23.11 – 11.12                                                                                       |
-| Ссылка на DoD/качество | burndown.md §2–3, burndown-fact.md §1.1–1.3, ../quality/lab3-eval-report.md, ../adr/adr-03-security-boundaries.md |
+| Ссылка на DoD/качество | burndown.md §2–3, burndown-fact.md §1–3, ../quality/lab3-eval-report.md, ../adr/adr-03-security-boundaries.md |
 
 ## 0. ДоD инкремента
 
@@ -30,8 +30,8 @@
 
 | Инкремент | Статус | Доказательство (PR/URL/eval) | Принято | Не принято → Backlog ID | Приоритет | Владелец | Срок | Подпись/статус |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| DOC-01: продуктовые формы и обработка ответов Quality | Принято | 2680a4a, f35e3f2, burndown-fact.md §1.1 | Да | — | — | PRODUCT | — | PRODUCT / VO |
-| P0 ядра G1: BUG-001, BUG-006, BUG-010, BUG-011, BUG-018, BUG-023 | Частично | burndown-fact.md §1.1 (14 SP в бэклоге) | Нет | BUG-001, BUG-006, BUG-010, BUG-011, BUG-018, BUG-023 | P0 | DELIVERY, PRODUCT | 27.11 | PRODUCT / DELIVERY |
+| DOC-01, DOC-02: обработка ответов Quality/Delivery и продуктивные формы | Принято | 2680a4a, f35e3f2, burndown-fact.md §1 | Да | — | — | PRODUCT | — | PRODUCT / VO |
+| P0 ядра G1: BUG-001, BUG-006, BUG-010, BUG-011, BUG-018, BUG-023 | Частично | burndown-fact.md §1 (14 SP в бэклоге) | Нет | BUG-001, BUG-006, BUG-010, BUG-011, BUG-018, BUG-023 | P0 | DELIVERY, PRODUCT | 27.11 | PRODUCT / DELIVERY |
 
 ## 2. Гейт 2 (30.11–04.12)
 
@@ -39,8 +39,8 @@
 
 | Инкремент | Статус | Доказательство (PR/URL/eval) | Принято | Не принято → Backlog ID | Приоритет | Владелец | Срок | Подпись/статус |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Ядро UC-3: BUG-021, BUG-E1, BUG-E3 | Ожидает приёмки 04.12 | eval G2, PR AI, burndown-fact.md §1.2 | — | — | P0 | AI ENGINEER, QUALITY | 04.12 | — |
-| Данные UC-1/UC-2: BUG-012, BUG-019, BUG-020, BUG-025 | Ожидает приёмки 04.12 | E2E сценарий F5, PR Delivery, burndown-fact.md §1.2 | — | — | P0 | DELIVERY | 04.12 | — |
+| Ядро UC-3: BUG-021, BUG-E1, BUG-E3 | Ожидает приёмки 04.12 | eval G2, PR AI, burndown-fact.md §2 | — | — | P0 | AI ENGINEER, QUALITY | 04.12 | — |
+| Данные UC-1/UC-2: BUG-012, BUG-019, BUG-020, BUG-025 | Ожидает приёмки 04.12 | E2E сценарий F5, PR Delivery, burndown-fact.md §2 | — | — | P0 | DELIVERY | 04.12 | — |
 
 **Подписи:** PRODUCT  / AI ENGINEER  / DELIVERY  / QUALITY & SAFETY
 
@@ -50,8 +50,8 @@
 
 | Инкремент | Статус | Доказательство (PR/URL/eval) | Принято | Не принято → Backlog ID | Приоритет | Владелец | Срок | Подпись/статус |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Инфраструктура и безопасность: INFRA-01, INFRA-02, INFRA-03, EVAL-01, SEC-01 | Ожидает приёмки 11.12 | CI run, дашборд, eval/attack report, burndown-fact.md §1.3 | — | — | P0 | DELIVERY, QUALITY | 11.12 | — |
-| P1 UC-1/UC-3 и документация: BUG-004, BUG-024, BUG-026, DOC-02, DOC-03 | Ожидает приёмки 11.12 | PRD v3, UC v3, PR, burndown-fact.md §1.3 | — | — | P1 | PRODUCT, AI ENGINEER, DELIVERY | 11.12 | — |
+| Инфраструктура и безопасность: INFRA-01, INFRA-02, INFRA-03, EVAL-01, SEC-01 | Ожидает приёмки 11.12 | CI run, дашборд, eval/attack report, burndown-fact.md §3 | — | — | P0 | DELIVERY, QUALITY | 11.12 | — |
+| P1 UC-1/UC-3 и документация: BUG-004, BUG-024, BUG-026, DOC-02, DOC-03 | Ожидает приёмки 11.12 | PRD v3, UC v3, PR, burndown-fact.md §3 | — | — | P1 | PRODUCT, AI ENGINEER, DELIVERY | 11.12 | — |
 
 **Подписи:** PRODUCT  / AI ENGINEER  / DELIVERY  / QUALITY & SAFETY
 

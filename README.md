@@ -73,7 +73,7 @@ Baseline Quality (`docs/quality/lab3-eval-report.md`, `docs/quality/summary-full
 | [docs/sprint-4/iteration-notes.md](docs/sprint-4/iteration-notes.md) | Итоги Sprint 3, техдолг, вопросы Q-01–Q-09, план Sprint 4 |
 | [docs/sprint-4/mvp-scope.md](docs/sprint-4/mvp-scope.md) | IN / CONDITIONAL / CUT Sprint 4 |
 | [docs/sprint-4/burndown.md](docs/sprint-4/burndown.md) | Сводка: План и факт, анализ отклонений |
-| [docs/sprint-4/burndown-plan.md](docs/sprint-4/burndown-plan.md) | План сгорания: 24 задачи, 70 SP |
+| [docs/sprint-4/burndown-plan.md](docs/sprint-4/burndown-plan.md) | План сгорания: 25 задач, 70 SP |
 | [docs/sprint-4/burndown-fact.md](docs/sprint-4/burndown-fact.md) | Факт сгорания по G1–G3 |
 | [docs/sprint-4/acceptance.md](docs/sprint-4/acceptance.md) | Приёмка инкрементов по гейтам и DoD |
 
@@ -108,6 +108,7 @@ Baseline Quality (`docs/quality/lab3-eval-report.md`, `docs/quality/summary-full
 | [docs/use-cases/validation-report/quality-sync-report.md](docs/use-cases/validation-report/quality-sync-report.md) | Синхронизация Quality / AI Engineer / UI |
 | [docs/use-cases/validation-report/ai-engineer-answers.md](docs/use-cases/validation-report/ai-engineer-answers.md) | Ответы AI Engineer, прогон 43/44 |
 | [docs/use-cases/validation-report/quality-safety-answers.md](docs/use-cases/validation-report/quality-safety-answers.md) | Ответы Q-01–Q-09 по качеству и безопасности |
+| [docs/use-cases/validation-report/delivery-answers.md](docs/use-cases/validation-report/delivery-answers.md) | Ответы Delivery: CI, провайдеры, сохранение данных, контракты, безопасность |
 
 ### ADR и качество
 
