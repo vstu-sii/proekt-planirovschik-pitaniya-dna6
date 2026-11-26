@@ -1,0 +1,268 @@
+openapi: 3.1.0
+info:
+  title: Meal Planner AI API
+  version: 1.0.0
+  description: |
+    Контракт AI-эндпоинтов MVP проекта «Планировщик питания».
+    AI использует GigaChat 2 Lite для смысловой генерации, а стоимость,
+    КБЖУ и формальные ограничения проверяются программно.
+servers:
+  - url: /
+tags:
+  - name: AI Meal Planning
+paths:
+  /api/v1/ai/meal-plans:
+    post:
+      tags: [AI Meal Planning]
+      summary: Сгенерировать план питания
+      operationId: generateMealPlan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MealPlanRequest'
+      responses:
+        '200':
+          description: Валидированный план питания
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MealPlanResponse'
+        '400':
+          description: Некорректный JSON запроса
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '422':
+          description: Запрос не соответствует входной схеме
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '429':
+          description: Превышен лимит AI-провайдера
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '502':
+          description: Ошибка внешнего AI-провайдера
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '503':
+          description: AI-провайдер или справочные данные временно недоступны
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '504':
+          description: AI-провайдер не ответил в установленный timeout
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+components:
+  schemas:
+    MealPlanRequest:
+      type: object
+      additionalProperties: false
+      required: [goal, budget, days, restrictions, excluded_products, pantry, max_cook_time_min]
+      properties:
+        goal:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: Цель питания пользователя.
+          examples: [снижение веса]
+        budget:
+          $ref: '#/components/schemas/Budget'
+        days:
+          type: integer
+          minimum: 1
+          maximum: 14
+          description: Количество дней планирования.
+        restrictions:
+          type: array
+          maxItems: 20
+          items:
+            type: string
+            minLength: 1
+            maxLength: 100
+          description: Диетические и иные ограничения.
+        excluded_products:
+          type: array
+          maxItems: 50
+          items:
+            type: string
+            minLength: 1
+            maxLength: 100
+          description: Продукты, которые нельзя использовать.
+        pantry:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/PantryItem'
+        max_cook_time_min:
+          type: integer
+          minimum: 1
+          maximum: 240
+          description: Максимальное время приготовления одного блюда.
+    Budget:
+      type: object
+      additionalProperties: false
+      required: [amount, currency]
+      properties:
+        amount:
+          type: number
+          exclusiveMinimum: 0
+        currency:
+          type: string
+          pattern: '^[A-Z]{3}$'
+          description: ISO 4217 currency code.
+          examples: [RUB]
+    PantryItem:
+      type: object
+      additionalProperties: false
+      required: [name, amount_g]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        amount_g:
+          type: number
+          exclusiveMinimum: 0
+    MealPlanResponse:
+      type: object
+      additionalProperties: false
+      required: [request_id, days, shopping_list, totals, validation]
+      properties:
+        request_id:
+          type: string
+          format: uuid
+        days:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/DayPlan'
+        shopping_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShoppingItem'
+        totals:
+          $ref: '#/components/schemas/PlanTotals'
+        validation:
+          $ref: '#/components/schemas/ValidationSummary'
+    DayPlan:
+      type: object
+      additionalProperties: false
+      required: [day, meals]
+      properties:
+        day:
+          type: integer
+          minimum: 1
+        meals:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Meal'
+    Meal:
+      type: object
+      additionalProperties: false
+      required: [name, meal_type, ingredients, cook_time_min]
+      properties:
+        name:
+          type: string
+          minLength: 1
+        meal_type:
+          type: string
+          enum: [breakfast, lunch, dinner, snack]
+        ingredients:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Ingredient'
+        cook_time_min:
+          type: number
+          minimum: 0
+    Ingredient:
+      type: object
+      additionalProperties: false
+      required: [name, amount_g]
+      properties:
+        name:
+          type: string
+          minLength: 1
+        amount_g:
+          type: number
+          minimum: 0
+    ShoppingItem:
+      type: object
+      additionalProperties: false
+      required: [name, amount_g, estimated_cost]
+      properties:
+        name:
+          type: string
+        amount_g:
+          type: number
+          minimum: 0
+        estimated_cost:
+          type: number
+          minimum: 0
+    PlanTotals:
+      type: object
+      additionalProperties: false
+      required: [cost, currency, calories, protein_g, fat_g, carbs_g]
+      properties:
+        cost:
+          type: number
+          minimum: 0
+        currency:
+          type: string
+          pattern: '^[A-Z]{3}$'
+        calories:
+          type: number
+          minimum: 0
+        protein_g:
+          type: number
+          minimum: 0
+        fat_g:
+          type: number
+          minimum: 0
+        carbs_g:
+          type: number
+          minimum: 0
+    ValidationSummary:
+      type: object
+      additionalProperties: false
+      required: [schema_valid, constraints_valid, retry_count]
+      properties:
+        schema_valid:
+          type: boolean
+        constraints_valid:
+          type: boolean
+        retry_count:
+          type: integer
+          minimum: 0
+          maximum: 1
+    ErrorResponse:
+      type: object
+      additionalProperties: false
+      required: [error, message, request_id]
+      properties:
+        error:
+          type: string
+          enum:
+            - invalid_json
+            - validation_error
+            - rate_limited
+            - provider_error
+            - service_unavailable
+            - timeout
+            - validation_failed_after_retry
+        message:
+          type: string
+        request_id:
+          type: string
+          format: uuid
+        details:
+          type: object
+          additionalProperties: true

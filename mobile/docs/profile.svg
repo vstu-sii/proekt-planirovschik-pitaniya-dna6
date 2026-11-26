@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844">
+  <rect width="390" height="844" fill="#f7f5ef"/>
+  <g font-family="DejaVu Sans" fill="#172019">
+    <text x="24" y="42" fill="#246b45" font-size="12" font-weight="700" letter-spacing="2">ЕДА · ПРОСТО</text>
+    <text x="24" y="90" fill="#246b45" font-size="13" font-weight="700">Шаг 1 из 2</text>
+    <text x="24" y="134" font-size="32" font-weight="700">Настроим рацион</text><text x="24" y="172" font-size="32" font-weight="700">под вас</text>
+    <text x="24" y="206" fill="#68756b" font-size="14">Данные нужны для расчёта бюджета и КБЖУ.</text>
+    <rect x="20" y="232" width="350" height="430" rx="22" fill="#fff" stroke="#dce5dd"/>
+    <text x="42" y="270" font-size="18" font-weight="700">Основные параметры</text>
+    <text x="42" y="304" fill="#68756b" font-size="12">Рост</text><text x="207" y="304" fill="#68756b" font-size="12">Вес</text>
+    <rect x="42" y="316" width="145" height="48" rx="13" fill="#fafcf9" stroke="#dce5dd"/><rect x="207" y="316" width="141" height="48" rx="13" fill="#fafcf9" stroke="#dce5dd"/>
+    <text x="57" y="347" font-size="16" font-weight="700">178</text><text x="157" y="347" fill="#68756b" font-size="13">см</text><text x="222" y="347" font-size="16" font-weight="700">74</text><text x="319" y="347" fill="#68756b" font-size="13">кг</text>
+    <text x="42" y="397" fill="#68756b" font-size="12">Бюджет на неделю</text><rect x="42" y="409" width="306" height="48" rx="13" fill="#fafcf9" stroke="#dce5dd"/><text x="57" y="440" font-size="16" font-weight="700">3 500</text><text x="320" y="440" fill="#68756b" font-size="14">₽</text>
+    <text x="42" y="489" fill="#68756b" font-size="12">Цель</text>
+    <rect x="42" y="502" width="102" height="36" rx="18" fill="#fff" stroke="#dce5dd"/><text x="54" y="525" fill="#68756b" font-size="12">Снизить вес</text>
+    <rect x="151" y="502" width="123" height="36" rx="18" fill="#eef5ef" stroke="#246b45"/><text x="164" y="525" fill="#246b45" font-size="12" font-weight="700">Поддерживать</text>
+    <text x="42" y="574" fill="#68756b" font-size="12">Время приготовления блюда</text>
+    <rect x="42" y="588" width="91" height="36" rx="18" fill="#fff" stroke="#dce5dd"/><text x="56" y="611" fill="#68756b" font-size="12">до 15 мин</text>
+    <rect x="141" y="588" width="91" height="36" rx="18" fill="#eef5ef" stroke="#246b45"/><text x="155" y="611" fill="#246b45" font-size="12" font-weight="700">до 30 мин</text>
+    <rect x="20" y="686" width="350" height="56" rx="16" fill="#246b45"/><text x="195" y="721" fill="#fff" font-size="16" font-weight="700" text-anchor="middle">Продолжить</text>
+    <text x="195" y="770" fill="#68756b" font-size="11" text-anchor="middle">Данные используются только для составления плана</text>
+  </g>
+</svg>

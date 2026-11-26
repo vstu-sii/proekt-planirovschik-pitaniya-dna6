@@ -1,0 +1,22 @@
+@startuml MealPlannerContainer
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Планировщик питания — C4 Container
+
+Person(user, "Пользователь", "Настраивает профиль, ограничения, запасы и получает план питания.")
+
+System_Boundary(mealPlanner, "Планировщик питания") {
+  Container(mobile, "Мобильное приложение", "React Native, Expo, TypeScript", "Собирает параметры пользователя и показывает меню, КБЖУ и список покупок.")
+  Container(api, "Backend API", "Python, FastAPI", "Модульный монолит: авторизация, планы, каталог, точные расчёты и оркестрация AI-конвейера.")
+  ContainerDb(database, "Основная база данных", "PostgreSQL", "Пользователи, ограничения, продукты, запасы, планы, блюда и списки покупок.")
+}
+
+System_Ext(gigaChat, "GigaChat API", "Генерирует структурированную заготовку меню.")
+
+Rel(user, mobile, "Использует")
+Rel(mobile, api, "Отправляет параметры и получает планы", "HTTPS/JSON")
+Rel(api, database, "Читает и сохраняет данные", "SQL/TCP")
+Rel(api, gigaChat, "Запрашивает варианты меню", "HTTPS/JSON")
+
+SHOW_LEGEND()
+@enduml

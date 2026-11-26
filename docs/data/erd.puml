@@ -1,0 +1,100 @@
+@startuml MealPlannerERD
+hide circle
+skinparam linetype ortho
+skinparam entity {
+  BackgroundColor #F7F5EF
+  BorderColor #246B45
+}
+
+entity users {
+  * id : uuid <<PK>>
+  --
+  * email : varchar(320) <<UQ>>
+  * created_at : timestamptz
+}
+
+entity dietary_restrictions {
+  * id : uuid <<PK>>
+  * user_id : uuid <<FK>>
+  --
+  * name : varchar(100)
+  * restriction_type : varchar(30)
+}
+
+entity products {
+  * id : uuid <<PK>>
+  --
+  * name : varchar(160) <<UQ>>
+  * price_per_kg : numeric
+  * calories_per_100g : numeric
+  * protein_per_100g : numeric
+  * fat_per_100g : numeric
+  * carbs_per_100g : numeric
+}
+
+entity pantry_items {
+  * id : uuid <<PK>>
+  * user_id : uuid <<FK>>
+  * product_id : uuid <<FK>>
+  --
+  * amount_g : numeric
+}
+
+entity meal_plans {
+  * id : uuid <<PK>>
+  * user_id : uuid <<FK>>
+  --
+  * goal : varchar(200)
+  * budget_amount : numeric
+  * budget_currency : char(3)
+  * days_count : integer
+  * max_cook_time_min : integer
+  * status : varchar(30)
+  * created_at : timestamptz
+}
+
+entity day_plans {
+  * id : uuid <<PK>>
+  * plan_id : uuid <<FK>>
+  --
+  * day_number : integer
+}
+
+entity meals {
+  * id : uuid <<PK>>
+  * day_plan_id : uuid <<FK>>
+  --
+  * name : varchar(200)
+  * meal_type : varchar(20)
+  instructions : text
+  * cook_time_min : integer
+}
+
+entity meal_ingredients {
+  * id : uuid <<PK>>
+  * meal_id : uuid <<FK>>
+  * product_id : uuid <<FK>>
+  --
+  * amount_g : numeric
+}
+
+entity shopping_list_items {
+  * id : uuid <<PK>>
+  * plan_id : uuid <<FK>>
+  * product_id : uuid <<FK>>
+  --
+  * amount_g : numeric
+  * estimated_cost : numeric
+}
+
+users ||--o{ dietary_restrictions
+users ||--o{ pantry_items
+users ||--o{ meal_plans
+products ||--o{ pantry_items
+meal_plans ||--|{ day_plans
+day_plans ||--|{ meals
+meals ||--|{ meal_ingredients
+products ||--o{ meal_ingredients
+meal_plans ||--o{ shopping_list_items
+products ||--o{ shopping_list_items
+@enduml
