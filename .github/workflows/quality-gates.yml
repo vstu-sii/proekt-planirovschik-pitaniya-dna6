@@ -1,0 +1,90 @@
+name: Quality gates
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  critical-paths:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DATABASE_URL: sqlite://
+      QUALITY_LIVE_ATTACKS: '0'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            backend/pyproject.toml
+            requirements-dev.txt
+      - run: python -m pip install -e './backend[dev]' -r requirements-dev.txt 'gigachat==0.2.4'
+      - run: python -m pytest -q tests/quality_safety/ --junitxml=quality-results/critical.xml
+      - run: python -m pytest -q backend/tests --junitxml=quality-results/backend.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: critical-paths
+          path: quality-results/*.xml
+  full-golden:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    # Configure this environment with required reviewers BEFORE running this workflow.
+    environment: quality-live
+    concurrency:
+      group: gigachat-freemium-${{ github.repository }}
+      cancel-in-progress: false
+    env:
+      GIGACHAT_MODEL: ${{ vars.GIGACHAT_MODEL || 'GigaChat-2' }}
+      GIGACHAT_BASE_URL: https://api.giga.chat/v1
+      GIGACHAT_AUTH_URL: https://ngw.devices.sberbank.ru:9443/api/v2/oauth
+      GIGACHAT_SCOPE: ${{ vars.GIGACHAT_SCOPE || 'GIGACHAT_API_PERS' }}
+      GIGACHAT_VERIFY_SSL_CERTS: 'true'
+      QUALITY_MAX_WORKERS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: python -m pip install -r requirements-dev.txt 'gigachat==0.2.4'
+      - name: Configure trusted CA
+        env:
+          GIGACHAT_CA_PEM: ${{ vars.GIGACHAT_CA_PEM }}
+        run: |
+          test -n "$GIGACHAT_CA_PEM"
+          printf '%s\n' "$GIGACHAT_CA_PEM" > "$RUNNER_TEMP/gigachat-ca.pem"
+          python -c 'import ssl,sys; ssl.create_default_context(cafile=sys.argv[1])' "$RUNNER_TEMP/gigachat-ca.pem"
+          echo "GIGACHAT_CA_BUNDLE_FILE=$RUNNER_TEMP/gigachat-ca.pem" >> "$GITHUB_ENV"
+      - name: Run full golden regression
+        env:
+          GIGACHAT_CREDENTIALS: ${{ secrets.GIGACHAT_CREDENTIALS }}
+        run: |
+          python -m quality_lab4.live --variant A \
+            --reuse docs/quality/reviewed-run-v4.json \
+            --out quality-results/live.json \
+            --review-template quality-results/review-template.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: golden-regression
+          path: |
+            quality-results/live.json
+            quality-results/review-template.json
+          retention-days: 7
+  merge-gate:
+    if: always()
+    needs: [critical-paths, full-golden]
+    runs-on: ubuntu-latest
+    steps:
+      - run: test '${{ needs.critical-paths.result }}' = success && test '${{ needs.full-golden.result }}' = success
