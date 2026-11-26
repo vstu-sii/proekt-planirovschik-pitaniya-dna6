@@ -30,3 +30,9 @@ Successful calls returned **18,894 tokens** (11,261 input; 7,633 output). Moneta
 ## Interpretation
 
 OAuth, smoke test, bounded retry and structured-output validation work. Full A/B remains **partial** due to 8 B_v2 SDK response failures. All successful responses pass the JSON contract, but semantic quality and safety require human evaluation. The literal forbidden-string count is zero; this does not establish semantic safety. The safety-review count remains 16 pending in this latest run; pending is not a pass.
+
+## Supplemental checks added after the live run
+
+- Current package test suite: 23 passed, 0 failed (the live notebook's original test cell remains documented as 22 passed).
+- Cost optimization scenario: controlled SQLite cache replay, 100 identical requests, 100→1 backend calls, 99 hits, 99.00% token-equivalent reduction; not production traffic.
+- Prompt iteration comparison: B_v2 mean successful-call usage 230.694 tokens vs A_v1 240.659 (4.14% lower), but B_v2 API success 36/44 vs A_v1 44/44. No winner is accepted.

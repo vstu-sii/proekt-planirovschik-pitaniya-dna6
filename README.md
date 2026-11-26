@@ -15,7 +15,7 @@
 - `tests/` — Golden Dataset v1 и unit tests.
 - `notebooks/Lab4_AI_Engineer_AB_Cost.ipynb` — последний выполненный ноутбук с экспортной ячейкой.
 - `results/` — сырые результаты последнего запуска, failure CSV, сводка, safety review и cost accounting.
-- `docs/` — отчёты, tool contract, trace policy, safety reconciliation и ADR.
+- `docs/` — отчёты, tool contract, trace policy, safety reconciliation, ADR, `prompt-evaluation.md` и `criteria-closure.md`.
 
 ## Быстрый offline check
 
@@ -40,7 +40,7 @@ python -m ml.experiments.run_ab --dataset tests/v1.json --output results/lab4_ab
 - Полный A/B: **80/88 успешных API вызовов** (A_v1 44/44; B_v2 36/44).
 - Все 80 успешных ответов прошли JSON-контракт; invalid JSON = 0, schema-invalid = 0.
 - После retry: 9 дополнительных попыток; 1 восстановленный кейс; 8 ошибок B_v2 остались.
-- Offline tests: **22 passed, 0 failed**.
+- Live notebook offline tests: **22 passed, 0 failed**; supplemental package validation after adding the cache benchmark regression test: **23 passed, 0 failed**.
 - Safety review: **16 кейсов pending manual review**, 0 passed, 0 violations.
 - Usage успешных вызовов: **18 894 токена** (11 261 input, 7 633 output). Freemium денежное списание: 0 ₽ в пределах доступной бесплатной квоты; выдуманные token rates не применяются.
 
@@ -51,3 +51,7 @@ Raw JSON/CSV, failure CSV, summary и cost accounting обновлены из а
 ## Ответ преподавателю
 
 См. `docs/tracing-policy.md`: полная трассировка нужна для контролируемого eval/debug и анализа причин ошибок; production default рекомендуется `TRACE_CAPTURE_CONTENT=false`, с временным разрешённым захватом, редактированием данных и сроком хранения.
+
+## Закрытие замечаний агента проверки
+
+См. `docs/criteria-closure.md`. Добавлен измеренный controlled cache replay: 100 одинаковых запросов, 100→1 backend calls, 99 hits, 99% token-equivalent reduction (не production traffic и не денежная экономия Freemium). Добавлено same-dataset сравнение версий prompt с обоснованием изменения и честным выводом: B_v2 использует на 4.14% меньше токенов на успешный вызов, но имеет 8/44 API/SDK failures, поэтому победитель не объявляется. Все исходные результаты последнего live запуска сохранены.

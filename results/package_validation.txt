@@ -1,0 +1,6 @@
+pytest -q tests
+23 passed, 0 failed
+Cache cost benchmark: 100 identical requests; backend calls 100 -> 1; cache hits 99; estimated token-equivalent reduction 99.00%.
+Raw A/B JSON/CSV: 88 rows each; (case_id, variant) keys match.
+Failure CSV: 8 rows; matches failed logical rows in raw JSON.
+Token usage reconciliation: input 11261; output 7633; total 18894.

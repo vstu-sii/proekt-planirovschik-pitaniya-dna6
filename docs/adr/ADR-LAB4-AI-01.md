@@ -19,4 +19,4 @@
 
 ## Цена решения
 
-Меньше гибкости, чем у полноценного агента, но меньше токенов, зависимостей и рисков. SQLite подходит для локального прототипа; при нескольких backend replicas потребуется shared cache (например, Redis) и отдельный контроль доступа. Cache hit rate и live cost savings нужно измерить, прежде чем считать оптимизацию подтверждённой.
+Меньше гибкости, чем у полноценного агента, но меньше токенов, зависимостей и рисков. SQLite подходит для локального прототипа; при нескольких backend replicas потребуется shared cache (например, Redis) и отдельный контроль доступа. Controlled local replay измерен: 100 одинаковых запросов дают 99 cache hits, 100→1 backend calls и 99% token-equivalent reduction при usage-среднем последнего live run. Это не production hit rate; cache остаётся прототипом и ещё не интегрирован в endpoint. См. `docs/ml-cost.md` и `results/cache_cost_benchmark.json`.

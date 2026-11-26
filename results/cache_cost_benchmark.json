@@ -1,0 +1,28 @@
+{
+  "benchmark": "sqlite_response_cache_identical_request_replay",
+  "requests": 100,
+  "unique_requests": 1,
+  "model": "GigaChat-2",
+  "prompt_version": "v2",
+  "token_basis": "Observed latest A/B usage: 11,261 input + 7,633 output tokens across 80 successful API calls; mean usage per successful call applied to a controlled replay.",
+  "backend_calls_before": 100,
+  "backend_calls_after": 1,
+  "cache_hits": 99,
+  "cache_hit_rate": 0.99,
+  "input_tokens_before_estimated": 14076.25,
+  "output_tokens_before_estimated": 9541.25,
+  "total_tokens_before_estimated": 23617.5,
+  "input_tokens_after_estimated": 140.762,
+  "output_tokens_after_estimated": 95.412,
+  "total_tokens_after_estimated": 236.175,
+  "estimated_token_reduction_percent": 99.0,
+  "freemium_actual_charge_before_rub": 0,
+  "freemium_actual_charge_after_rub": 0,
+  "monetary_savings_rub": 0,
+  "limitations": [
+    "Controlled local replay; not measured production traffic or live provider billing.",
+    "All 100 requests are deliberately identical; cache savings depend on real duplicate rate.",
+    "Cache is a prototype module and is not yet wired into the production endpoint.",
+    "Token equivalents use the latest-run mean usage; cached responses make no provider call."
+  ]
+}

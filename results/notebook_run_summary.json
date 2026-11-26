@@ -84,5 +84,15 @@
     "violations": 0,
     "note": "Human review only; pending is not pass."
   },
-  "interpretation": "API success 80/88; 8 calls failed after retry. Successful responses are evaluated separately by JSON contract. No prompt winner is declared from an incomplete paired run."
+  "interpretation": "API success 80/88; 8 calls failed after retry. Successful responses are evaluated separately by JSON contract. No prompt winner is declared from an incomplete paired run.",
+  "package_validation": {
+    "passed": 23,
+    "failed": 0,
+    "returncode": 0,
+    "note": "Fresh offline pytest after adding cache benchmark regression test; distinct from the 22 tests in the original live notebook execution."
+  },
+  "criteria_evidence": {
+    "cache_cost_before_after": "controlled local SQLite replay; 100 backend calls before, 1 after, 99 hits, 99.00% token-equivalent reduction; not production traffic",
+    "prompt_iteration": "same-dataset A_v1/B_v2 run documented in docs/prompt-evaluation.md; no winner declared because B_v2 had 8 API/SDK failures"
+  }
 }

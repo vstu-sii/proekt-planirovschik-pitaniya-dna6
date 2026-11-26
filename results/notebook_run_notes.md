@@ -19,3 +19,10 @@
 ## Интерпретация
 
 OAuth, smoke test и JSON-контракт прошли. Полный A/B частичный из-за 8 SDK/API ошибок B_v2 после retry. Нельзя объявлять prompt winner. Причина неполного ответа upstream по данным логов не установлена. Все 16 safety-critical кейсов остаются pending и не могут считаться проверенными.
+
+## Дополнительная проверка пакета после закрытия замечаний агента
+
+- Добавлен воспроизводимый cache cost benchmark: 100 одинаковых запросов, backend calls 100→1, 99 cache hits, token-equivalent reduction 99.00%. Это controlled replay, не production traffic.
+- Добавлено сравнение prompt A_v1/B_v2: 240.659 vs 230.694 tokens на успешный вызов (B_v2 ниже на 4.14%), но B_v2 имеет 8/44 API/SDK failures; победитель не объявляется.
+- После добавления теста benchmark повторно выполнено offline test suite: **23 passed, 0 failed**. Исторический live notebook run по-прежнему содержит 22 passed.
+- Проверены согласованность JSON/CSV (88 одинаковых ключей), failure CSV (8 записей) и token usage (11 261 input + 7 633 output = 18 894).

@@ -12,9 +12,9 @@
 
 ## Не выполнено/не заявляется
 
-- Cache не интегрирован в текущий backend endpoint и cache hit rate не измерен.
+- Cache не интегрирован в текущий backend endpoint; production cache hit rate не измерен. Controlled local replay с 100 одинаковыми запросами измерен: 99 hits, 100→1 backend calls, 99% token-equivalent reduction. Это сценарный benchmark, не production savings.
 - Nutrition tool является изолированным модулем-прототипом; подключение к актуальному backend/catalog требует интеграции Delivery и согласования API-контракта.
-- Не заявляется production deploy, CI run или подтверждённый прирост качества.
+- Не заявляется production deploy, CI run или подтверждённый прирост semantic quality. Prompt v2 имеет executed A/B evidence; сравнительный token metric описательный, quality gate не пройден из-за 8 API/SDK failures.
 
 ## Цена решения
 
@@ -33,3 +33,8 @@ The earlier strict-schema live run returned 78/88 API responses (A_v1 43/44, B_v
 The latest executed notebook and its exported raw JSON/CSV reconcile to **80/88 final API successes**: A_v1 44/44, B_v2 36/44. All 80 successful outputs passed the strict JSON contract. There were 9 retry attempts, 1 recovered logical case, and 8 B_v2 SDK `ValidationError` failures remain. Successful-call usage was 18,894 tokens (11,261 input; 7,633 output). 22 offline tests passed. The full A/B remains partial; no prompt winner is declared.
 
 Safety review output in this latest run remains **16 pending, 0 passed, 0 violations**. Manual review is still outstanding; pending is not pass. The export cell generated the 8-row failure CSV and reconciled the current artifacts.
+
+
+## Prompt iteration evidence
+
+See `docs/prompt-evaluation.md` and `results/prompt_comparison.json` for the documented reason for v2 and the same-Golden-Dataset A_v1/B_v2 run. B_v2 mean token usage was 4.14% lower among successful responses (230.694 vs 240.659 tokens), but B_v2 API success was 36/44 vs A_v1 44/44. Because the success sets differ and 8 B_v2 calls failed, no winner or quality improvement is claimed.
