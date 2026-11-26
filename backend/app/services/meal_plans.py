@@ -67,9 +67,7 @@ def generate_and_store(db: Session, request: MealPlanRequest) -> MealPlanRespons
             try:
                 product_facts(item.name)
             except ValueError as exc:
-                raise UnsafePlanError(
-                    "Недопустимый продукт в запасах"
-                ) from exc
+                raise UnsafePlanError("Недопустимый продукт в запасах") from exc
         provider_result = provider_from_settings().generate(request, str(request_id))
         emit_trace(
             str(request_id),
