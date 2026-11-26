@@ -1,6 +1,6 @@
 from pathlib import Path
-from backend.tests.evals.analyze_results import summarize
 
+from backend.tests.evals.analyze_results import summarize
 
 ROOT = Path(__file__).resolve().parents[3]
 
