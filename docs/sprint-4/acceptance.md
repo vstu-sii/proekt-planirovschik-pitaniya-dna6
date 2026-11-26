@@ -21,7 +21,7 @@
 
 ## 0. Definition of Done (DoD)
 
-- [ ] PRD и Use Cases обновлены.
+- [x] PRD и Use Cases обновлены.
 - [ ] Сценарий проходит E2E на проде.
 - [ ] Нет открытых P0 по принятой фиче.
 - [ ] Quality-gate зеленый.
