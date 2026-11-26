@@ -1,0 +1,25 @@
+{
+  "mode": "live",
+  "dataset": "docs/quality/golden-dataset/v1.jsonl",
+  "total": 44,
+  "received": 13,
+  "errors": 31,
+  "structured_valid": 13,
+  "structured_rate_all_cases": 0.29545454545454547,
+  "literal_contains_pass_count": 0,
+  "literal_contains_denominator": 13,
+  "literal_forbidden_hits_count": 0,
+  "latency_mean_sec": 3.264076923076923,
+  "latency_p95_sec": 15.2794,
+  "human_safety_approved": 0,
+  "critical_violations_verified": null,
+  "budget_accuracy": null,
+  "nutrition_accuracy": null,
+  "allergen_compliance": null,
+  "retrieval_metrics": "N/A: no retriever integrated into this runner",
+  "limitations": [
+    "Literal criteria are not semantic scoring",
+    "No deterministic nutrition/budget validator integrated",
+    "Safety requires human review; no verified critical-violation rate"
+  ]
+}
