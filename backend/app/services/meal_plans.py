@@ -2,9 +2,6 @@ import uuid
 from collections import defaultdict
 from decimal import Decimal
 
-from sqlalchemy import select
-from sqlalchemy.orm import Session
-
 from app.api.schemas import (
     MealPlanRequest,
     MealPlanResponse,
@@ -12,6 +9,12 @@ from app.api.schemas import (
     ShoppingItem,
     ValidationSummary,
 )
+from app.observability.tracing import emit_trace
+from app.services.catalog import ALIASES, product_facts
+from app.services.providers import provider_from_settings
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
 from app.db.models import (
     DayPlan as DayPlanModel,
 )
@@ -28,9 +31,6 @@ from app.db.models import (
 from app.db.models import (
     Meal as MealModel,
 )
-from app.observability.tracing import emit_trace
-from app.services.catalog import ALIASES, product_facts
-from app.services.providers import provider_from_settings
 
 
 class UnsafePlanError(ValueError):
