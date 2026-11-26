@@ -1,0 +1,16 @@
+{
+  "model": "GigaChat-2",
+  "logical_cases": 88,
+  "api_attempts_including_retries": 97,
+  "successful_requests": 80,
+  "failed_requests": 8,
+  "tokens_input_successful": 11261,
+  "tokens_output_successful": 7633,
+  "tokens_total_successful": 18894,
+  "freemium_free_quota_tokens_per_12_months": 250000000,
+  "quota_usage_percent_estimate": 0.007557599999999999,
+  "actual_charge_rub": 0,
+  "note": "Freemium run; no invented marginal token rates. Usage sums successful calls only. Provider quota accounting may differ.",
+  "retry_attempts": 9,
+  "retry_recovered": 1
+}

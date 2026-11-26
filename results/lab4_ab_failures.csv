@@ -1,0 +1,33 @@
+﻿case_id,variant,status,attempts,error_type,error_message,retry_errors
+GD-0.2-002,B_v2,error,2,pydantic_core._pydantic_core.ValidationError,"1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","[{""attempt"": 1, ""error_type"": ""pydantic_core._pydantic_core.ValidationError"", ""error_message"": ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]"
+GD-0.2-007,B_v2,error,2,pydantic_core._pydantic_core.ValidationError,"1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","[{""attempt"": 1, ""error_type"": ""pydantic_core._pydantic_core.ValidationError"", ""error_message"": ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]"
+GD-0.2-011,B_v2,error,2,pydantic_core._pydantic_core.ValidationError,"1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","[{""attempt"": 1, ""error_type"": ""pydantic_core._pydantic_core.ValidationError"", ""error_message"": ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]"
+GD-0.2-013,B_v2,error,2,pydantic_core._pydantic_core.ValidationError,"1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","[{""attempt"": 1, ""error_type"": ""pydantic_core._pydantic_core.ValidationError"", ""error_message"": ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]"
+GD-0.2-017,B_v2,error,2,pydantic_core._pydantic_core.ValidationError,"1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","[{""attempt"": 1, ""error_type"": ""pydantic_core._pydantic_core.ValidationError"", ""error_message"": ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]"
+GD-0.2-021,B_v2,error,2,pydantic_core._pydantic_core.ValidationError,"1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","[{""attempt"": 1, ""error_type"": ""pydantic_core._pydantic_core.ValidationError"", ""error_message"": ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]"
+GD-0.2-028,B_v2,error,2,pydantic_core._pydantic_core.ValidationError,"1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","[{""attempt"": 1, ""error_type"": ""pydantic_core._pydantic_core.ValidationError"", ""error_message"": ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]"
+GD-0.2-039,B_v2,error,2,pydantic_core._pydantic_core.ValidationError,"1 validation error for ChatCompletion
+choices.0.message.role
+  Field required [type=missing, input_value={'content': ''}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing","[{""attempt"": 1, ""error_type"": ""pydantic_core._pydantic_core.ValidationError"", ""error_message"": ""1 validation error for ChatCompletion\nchoices.0.message.role\n  Field required [type=missing, input_value={'content': ''}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing""}]"

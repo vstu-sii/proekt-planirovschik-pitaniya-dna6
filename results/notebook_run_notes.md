@@ -1,0 +1,28 @@
+# Последний запуск Lab 4: сверка результатов
+
+Источник: выполненный ноутбук `Lab4_AI_Engineer_AB_Cost_itog.ipynb` и экспорт `lab4_ab_results_same_run(1).zip`, 25.11.2026.
+
+- Golden Dataset v1: 88 логических A/B записей (44 A_v1 + 44 B_v2).
+- API: **80/88** финально успешных; 8 неуспешных после retry.
+- Попытки API с retry: **97** всего; дополнительных попыток: 9; восстановлено: 1.
+- A_v1: 44/44 успешно; 1 дополнительная попытка, восстановлена.
+- B_v2: 36/44 успешно; 8 ответов SDK не содержали `choices.0.message.role` и имели пустой `content`; 8 retry, ни один не восстановился.
+- Все 80 успешных ответов прошли JSON-контракт; invalid JSON = 0, schema-invalid = 0.
+- Успешные токены: input **11 261**; output **7 633**; total **18 894**.
+- Unit tests: **22 passed, 0 failed**.
+- Safety review: **16 pending; 0 passed; 0 violations**. Все 16 кейсов требуют ручной проверки.
+
+## Исправление последней ячейки
+
+Экспортная ячейка последнего ноутбука строит failure CSV из `results/lab4_ab.json`, сверяет количество строк CSV с JSON и пересчитывает summary и Freemium accounting из фактических данных. Она упаковывает артефакты текущего runtime без повторного обращения к модели.
+
+## Интерпретация
+
+OAuth, smoke test и JSON-контракт прошли. Полный A/B частичный из-за 8 SDK/API ошибок B_v2 после retry. Нельзя объявлять prompt winner. Причина неполного ответа upstream по данным логов не установлена. Все 16 safety-critical кейсов остаются pending и не могут считаться проверенными.
+
+## Дополнительная проверка пакета после закрытия замечаний агента
+
+- Добавлен воспроизводимый cache cost benchmark: 100 одинаковых запросов, backend calls 100→1, 99 cache hits, token-equivalent reduction 99.00%. Это controlled replay, не production traffic.
+- Добавлено сравнение prompt A_v1/B_v2: 240.659 vs 230.694 tokens на успешный вызов (B_v2 ниже на 4.14%), но B_v2 имеет 8/44 API/SDK failures; победитель не объявляется.
+- После добавления теста benchmark повторно выполнено offline test suite: **23 passed, 0 failed**. Исторический live notebook run по-прежнему содержит 22 passed.
+- Проверены согласованность JSON/CSV (88 одинаковых ключей), failure CSV (8 записей) и token usage (11 261 input + 7 633 output = 18 894).
