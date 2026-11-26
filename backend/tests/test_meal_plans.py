@@ -1,7 +1,9 @@
 from collections.abc import Generator
 
+import pytest
+
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine, select
+from sqlalchemy import create_engine, event, select
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
 
@@ -14,6 +16,13 @@ engine = create_engine(
     connect_args={"check_same_thread": False},
     poolclass=StaticPool,
 )
+
+
+@event.listens_for(engine, "connect")
+def enable_foreign_keys(connection, connection_record) -> None:
+    connection.execute("PRAGMA foreign_keys=ON")
+
+
 TestingSession = sessionmaker(bind=engine, expire_on_commit=False)
 Base.metadata.create_all(engine)
 
@@ -30,7 +39,8 @@ app.dependency_overrides[get_db] = override_db
 client = TestClient(app)
 
 
-def test_generate_and_read_persisted_plan() -> None:
+@pytest.mark.parametrize("with_pantry", [False, True])
+def test_generate_and_read_persisted_plan(with_pantry: bool) -> None:
     response = client.post(
         "/api/v1/ai/meal-plans",
         json={
@@ -43,7 +53,9 @@ def test_generate_and_read_persisted_plan() -> None:
             "pantry": [
                 {"name": "Гречка", "amount_g": 50},
                 {"name": "Яйца", "amount_g": 360},
-            ],
+            ]
+            if with_pantry
+            else [],
             "max_cook_time_min": 30,
         },
     )
