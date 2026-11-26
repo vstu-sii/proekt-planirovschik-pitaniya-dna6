@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar'
 import { useState } from 'react'
 import {
+  ActivityIndicator,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -10,33 +11,48 @@ import {
   View,
 } from 'react-native'
 
-type Screen = 'profile' | 'pantry' | 'plan'
+type Screen = 'profile' | 'pantry' | 'loading' | 'plan' | 'error'
+type NavigationScreen = 'profile' | 'pantry' | 'plan'
+type Goal = 'снижение веса' | 'поддержание веса' | 'набор веса'
+type PantryKey = 'buckwheat' | 'eggs' | 'beans'
 
-const screens: Screen[] = ['profile', 'pantry', 'plan']
-
-function initialScreen(): Screen {
-  if (typeof window === 'undefined') return 'profile'
-  const requested = new URLSearchParams(window.location.search).get('screen')
-  return screens.includes(requested as Screen)
-    ? (requested as Screen)
-    : 'profile'
+type ApiMeal = {
+  name: string
+  meal_type: string
+  ingredients: { name: string; amount_g: number }[]
+  cook_time_min: number
 }
 
-const meals = [
-  {
-    type: 'Завтрак',
-    name: 'Овсянка с яблоком',
-    kcal: '420 ккал',
-    time: '10 мин',
-  },
-  { type: 'Обед', name: 'Гречка с курицей', kcal: '680 ккал', time: '25 мин' },
-  {
-    type: 'Ужин',
-    name: 'Тёплый салат с фасолью',
-    kcal: '510 ккал',
-    time: '20 мин',
-  },
-]
+type PlanResponse = {
+  request_id: string
+  days: { day: number; meals: ApiMeal[] }[]
+  shopping_list: { name: string; amount_g: number; estimated_cost: number }[]
+  totals: {
+    cost: number
+    currency: string
+    calories: number
+    protein_g: number
+    fat_g: number
+    carbs_g: number
+    target_calories_per_day: number
+  }
+  validation: {
+    schema_valid: boolean
+    constraints_valid: boolean
+    retry_count: number
+  }
+}
+
+const screens: NavigationScreen[] = ['profile', 'pantry', 'plan']
+const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000'
+
+function initialScreen(): NavigationScreen {
+  if (typeof window === 'undefined') return 'profile'
+  const requested = new URLSearchParams(window.location.search).get('screen')
+  return screens.includes(requested as NavigationScreen)
+    ? (requested as NavigationScreen)
+    : 'profile'
+}
 
 function Header({
   step,
@@ -61,16 +77,23 @@ function Field({
   label,
   value,
   suffix,
+  onChangeText,
 }: {
   label: string
   value: string
   suffix?: string
+  onChangeText: (value: string) => void
 }) {
   return (
     <View style={styles.field}>
       <Text style={styles.label}>{label}</Text>
       <View style={styles.inputRow}>
-        <TextInput editable={false} style={styles.input} value={value} />
+        <TextInput
+          keyboardType="numeric"
+          onChangeText={onChangeText}
+          style={styles.input}
+          value={value}
+        />
         {suffix && <Text style={styles.suffix}>{suffix}</Text>}
       </View>
     </View>
@@ -80,16 +103,22 @@ function Field({
 function Chip({
   children,
   active = false,
+  onPress,
 }: {
   children: string
   active?: boolean
+  onPress: () => void
 }) {
   return (
-    <View style={[styles.chip, active && styles.chipActive]}>
+    <Pressable
+      accessibilityRole="button"
+      onPress={onPress}
+      style={[styles.chip, active && styles.chipActive]}
+    >
       <Text style={[styles.chipText, active && styles.chipTextActive]}>
         {children}
       </Text>
-    </View>
+    </Pressable>
   )
 }
 
@@ -111,7 +140,33 @@ function PrimaryButton({
   )
 }
 
-function ProfileScreen({ next }: { next: () => void }) {
+function ProfileScreen({
+  height,
+  weight,
+  budget,
+  goal,
+  maxCookTime,
+  error,
+  setHeight,
+  setWeight,
+  setBudget,
+  setGoal,
+  setMaxCookTime,
+  next,
+}: {
+  height: string
+  weight: string
+  budget: string
+  goal: Goal
+  maxCookTime: number
+  error: string
+  setHeight: (value: string) => void
+  setWeight: (value: string) => void
+  setBudget: (value: string) => void
+  setGoal: (value: Goal) => void
+  setMaxCookTime: (value: number) => void
+  next: () => void
+}) {
   return (
     <ScrollView contentContainerStyle={styles.content}>
       <Header
@@ -122,22 +177,62 @@ function ProfileScreen({ next }: { next: () => void }) {
       <View style={styles.card}>
         <Text style={styles.sectionTitle}>Основные параметры</Text>
         <View style={styles.columns}>
-          <Field label="Рост" value="178" suffix="см" />
-          <Field label="Вес" value="74" suffix="кг" />
+          <Field
+            label="Рост"
+            value={height}
+            suffix="см"
+            onChangeText={setHeight}
+          />
+          <Field
+            label="Вес"
+            value={weight}
+            suffix="кг"
+            onChangeText={setWeight}
+          />
         </View>
-        <Field label="Бюджет на неделю" value="3 500" suffix="₽" />
+        <Field
+          label="Бюджет на неделю"
+          value={budget}
+          suffix="₽"
+          onChangeText={setBudget}
+        />
         <Text style={styles.label}>Цель</Text>
         <View style={styles.chips}>
-          <Chip>Снизить вес</Chip>
-          <Chip active>Поддерживать</Chip>
-          <Chip>Набрать вес</Chip>
+          <Chip
+            active={goal === 'снижение веса'}
+            onPress={() => setGoal('снижение веса')}
+          >
+            Снизить вес
+          </Chip>
+          <Chip
+            active={goal === 'поддержание веса'}
+            onPress={() => setGoal('поддержание веса')}
+          >
+            Поддерживать
+          </Chip>
+          <Chip
+            active={goal === 'набор веса'}
+            onPress={() => setGoal('набор веса')}
+          >
+            Набрать вес
+          </Chip>
         </View>
         <Text style={styles.label}>Сколько готовить одно блюдо</Text>
         <View style={styles.chips}>
-          <Chip>до 15 мин</Chip>
-          <Chip active>до 30 мин</Chip>
-          <Chip>не важно</Chip>
+          <Chip active={maxCookTime === 15} onPress={() => setMaxCookTime(15)}>
+            до 15 мин
+          </Chip>
+          <Chip active={maxCookTime === 30} onPress={() => setMaxCookTime(30)}>
+            до 30 мин
+          </Chip>
+          <Chip
+            active={maxCookTime === 240}
+            onPress={() => setMaxCookTime(240)}
+          >
+            не важно
+          </Chip>
         </View>
+        {error ? <Text style={styles.validationError}>{error}</Text> : null}
       </View>
       <PrimaryButton title="Продолжить" onPress={next} />
       <Text style={styles.privacy}>
@@ -147,7 +242,32 @@ function ProfileScreen({ next }: { next: () => void }) {
   )
 }
 
-function PantryScreen({ next }: { next: () => void }) {
+const pantryOptions: Record<
+  PantryKey,
+  { name: string; amount: string; amount_g: number }
+> = {
+  buckwheat: { name: 'Гречка', amount: '450 г', amount_g: 450 },
+  eggs: { name: 'Яйца', amount: '6 шт', amount_g: 360 },
+  beans: {
+    name: 'Фасоль консервированная',
+    amount: '1 банка',
+    amount_g: 400,
+  },
+}
+
+function PantryScreen({
+  selected,
+  excluded,
+  togglePantry,
+  toggleExcluded,
+  next,
+}: {
+  selected: PantryKey[]
+  excluded: string[]
+  togglePantry: (value: PantryKey) => void
+  toggleExcluded: (value: string) => void
+  next: () => void
+}) {
   return (
     <ScrollView contentContainerStyle={styles.content}>
       <Header
@@ -157,29 +277,51 @@ function PantryScreen({ next }: { next: () => void }) {
       />
       <View style={styles.card}>
         <Text style={styles.sectionTitle}>Ваши продукты</Text>
-        {[
-          ['Гречка', '450 г'],
-          ['Яйца', '6 шт'],
-          ['Фасоль консервированная', '1 банка'],
-        ].map(([name, amount]) => (
-          <View key={name} style={styles.productRow}>
+        {(
+          Object.entries(pantryOptions) as [
+            PantryKey,
+            (typeof pantryOptions)[PantryKey],
+          ][]
+        ).map(([key, item]) => (
+          <Pressable
+            key={key}
+            onPress={() => togglePantry(key)}
+            style={styles.productRow}
+          >
             <View style={styles.productIcon}>
-              <Text>✓</Text>
+              <Text>{selected.includes(key) ? '✓' : '＋'}</Text>
             </View>
             <View style={styles.productText}>
-              <Text style={styles.productName}>{name}</Text>
-              <Text style={styles.productAmount}>{amount}</Text>
+              <Text style={styles.productName}>{item.name}</Text>
+              <Text style={styles.productAmount}>{item.amount}</Text>
             </View>
-            <Text style={styles.remove}>×</Text>
-          </View>
+            <Text style={styles.remove}>
+              {selected.includes(key) ? '×' : ''}
+            </Text>
+          </Pressable>
         ))}
         <View style={styles.addProduct}>
-          <Text style={styles.addProductText}>＋ Добавить продукт</Text>
+          <Text style={styles.addProductText}>
+            Нажмите продукт, чтобы добавить или убрать
+          </Text>
         </View>
       </View>
       <View style={styles.notice}>
         <Text style={styles.noticeTitle}>Ограничения</Text>
-        <Text style={styles.noticeText}>Без арахиса · Не люблю сельдерей</Text>
+        <View style={[styles.chips, styles.restrictionChips]}>
+          <Chip
+            active={excluded.includes('арахис')}
+            onPress={() => toggleExcluded('арахис')}
+          >
+            Без арахиса
+          </Chip>
+          <Chip
+            active={excluded.includes('сельдерей')}
+            onPress={() => toggleExcluded('сельдерей')}
+          >
+            Без сельдерея
+          </Chip>
+        </View>
       </View>
       <PrimaryButton title="Составить план" onPress={next} />
       <Text style={styles.privacy}>
@@ -189,7 +331,14 @@ function PantryScreen({ next }: { next: () => void }) {
   )
 }
 
-function PlanScreen() {
+function PlanScreen({ plan, budget }: { plan: PlanResponse; budget: number }) {
+  const meals = plan.days[0]?.meals ?? []
+  const mealTypes: Record<string, string> = {
+    breakfast: 'Завтрак',
+    lunch: 'Обед',
+    dinner: 'Ужин',
+    snack: 'Перекус',
+  }
   return (
     <ScrollView contentContainerStyle={styles.content}>
       <Header
@@ -199,15 +348,22 @@ function PlanScreen() {
       />
       <View style={styles.summary}>
         <View>
-          <Text style={styles.summaryValue}>1 610</Text>
-          <Text style={styles.summaryLabel}>ккал</Text>
+          <Text style={styles.summaryValue}>
+            {Math.round(plan.totals.target_calories_per_day)}
+          </Text>
+          <Text style={styles.summaryLabel}>цель ккал/день</Text>
         </View>
         <View>
-          <Text style={styles.summaryValue}>108 г</Text>
+          <Text style={styles.summaryValue}>
+            {Math.round(plan.totals.protein_g / Math.max(1, plan.days.length))}{' '}
+            г
+          </Text>
           <Text style={styles.summaryLabel}>белок</Text>
         </View>
         <View>
-          <Text style={styles.summaryValue}>487 ₽</Text>
+          <Text style={styles.summaryValue}>
+            {Math.round(plan.totals.cost)} ₽
+          </Text>
           <Text style={styles.summaryLabel}>стоимость</Text>
         </View>
       </View>
@@ -219,10 +375,12 @@ function PlanScreen() {
             <Text style={styles.mealNumberText}>{index + 1}</Text>
           </View>
           <View style={styles.mealBody}>
-            <Text style={styles.mealType}>{meal.type}</Text>
+            <Text style={styles.mealType}>
+              {mealTypes[meal.meal_type] ?? meal.meal_type}
+            </Text>
             <Text style={styles.mealName}>{meal.name}</Text>
             <Text style={styles.mealMeta}>
-              {meal.kcal} · {meal.time}
+              {meal.ingredients.length} ингредиента · {meal.cook_time_min} мин
             </Text>
           </View>
           <Text style={styles.chevron}>›</Text>
@@ -231,7 +389,10 @@ function PlanScreen() {
       <View style={styles.budgetCard}>
         <View>
           <Text style={styles.noticeTitle}>Бюджет недели</Text>
-          <Text style={styles.noticeText}>Осталось 91 ₽ из 3 500 ₽</Text>
+          <Text style={styles.noticeText}>
+            Осталось {Math.max(0, Math.round(budget - plan.totals.cost))} ₽ из{' '}
+            {Math.round(budget)} ₽
+          </Text>
         </View>
         <Text style={styles.budgetOk}>✓</Text>
       </View>
@@ -240,28 +401,179 @@ function PlanScreen() {
   )
 }
 
+function LoadingScreen() {
+  return (
+    <View style={styles.stateScreen}>
+      <ActivityIndicator color={colors.green} size="large" />
+      <Text style={styles.stateTitle}>Составляем рацион…</Text>
+      <Text style={styles.stateText}>
+        Проверяем ограничения, бюджет и продукты дома
+      </Text>
+    </View>
+  )
+}
+
+function ErrorScreen({
+  message,
+  retry,
+}: {
+  message: string
+  retry: () => void
+}) {
+  return (
+    <View style={styles.stateScreen}>
+      <Text style={styles.errorIcon}>!</Text>
+      <Text style={styles.stateTitle}>Не удалось создать план</Text>
+      <Text style={styles.stateText}>{message}</Text>
+      <PrimaryButton title="Попробовать ещё раз" onPress={retry} />
+    </View>
+  )
+}
+
 export default function App() {
   const [screen, setScreen] = useState<Screen>(initialScreen)
+  const [plan, setPlan] = useState<PlanResponse | null>(null)
+  const [error, setError] = useState('Проверьте соединение и повторите запрос')
+  const [profileError, setProfileError] = useState('')
+  const [height, setHeight] = useState('178')
+  const [weight, setWeight] = useState('74')
+  const [budget, setBudget] = useState('3500')
+  const [goal, setGoal] = useState<Goal>('поддержание веса')
+  const [maxCookTime, setMaxCookTime] = useState(30)
+  const [pantry, setPantry] = useState<PantryKey[]>(['buckwheat', 'beans'])
+  const [excluded, setExcluded] = useState<string[]>(['арахис', 'сельдерей'])
+
+  function continueToPantry() {
+    const parsedHeight = Number(height)
+    const parsedWeight = Number(weight)
+    const parsedBudget = Number(budget)
+    if (
+      !Number.isFinite(parsedHeight) ||
+      parsedHeight < 120 ||
+      parsedHeight > 230
+    ) {
+      setProfileError('Рост должен быть от 120 до 230 см')
+      return
+    }
+    if (
+      !Number.isFinite(parsedWeight) ||
+      parsedWeight < 35 ||
+      parsedWeight > 250
+    ) {
+      setProfileError('Вес должен быть от 35 до 250 кг')
+      return
+    }
+    if (!Number.isFinite(parsedBudget) || parsedBudget <= 0) {
+      setProfileError('Укажите бюджет больше нуля')
+      return
+    }
+    setProfileError('')
+    setScreen('pantry')
+  }
+
+  function togglePantry(value: PantryKey) {
+    setPantry((current) =>
+      current.includes(value)
+        ? current.filter((item) => item !== value)
+        : [...current, value],
+    )
+  }
+
+  function toggleExcluded(value: string) {
+    setExcluded((current) =>
+      current.includes(value)
+        ? current.filter((item) => item !== value)
+        : [...current, value],
+    )
+  }
+
+  async function generatePlan() {
+    setScreen('loading')
+    try {
+      const response = await fetch(`${apiUrl}/api/v1/ai/meal-plans`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          profile: { height_cm: Number(height), weight_kg: Number(weight) },
+          goal,
+          budget: { amount: Number(budget), currency: 'RUB' },
+          days: 7,
+          restrictions: excluded.map((item) => `без ${item}`),
+          excluded_products: excluded,
+          pantry: pantry.map((key) => ({
+            name: pantryOptions[key].name,
+            amount_g: pantryOptions[key].amount_g,
+          })),
+          max_cook_time_min: maxCookTime,
+        }),
+      })
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}))
+        throw new Error(
+          body.message ?? body.detail ?? `Ошибка API: ${response.status}`,
+        )
+      }
+      setPlan((await response.json()) as PlanResponse)
+      setScreen('plan')
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : 'Неизвестная ошибка')
+      setScreen('error')
+    }
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar style="dark" />
       <View style={styles.phone}>
         {screen === 'profile' && (
-          <ProfileScreen next={() => setScreen('pantry')} />
+          <ProfileScreen
+            height={height}
+            weight={weight}
+            budget={budget}
+            goal={goal}
+            maxCookTime={maxCookTime}
+            error={profileError}
+            setHeight={setHeight}
+            setWeight={setWeight}
+            setBudget={setBudget}
+            setGoal={setGoal}
+            setMaxCookTime={setMaxCookTime}
+            next={continueToPantry}
+          />
         )}
-        {screen === 'pantry' && <PantryScreen next={() => setScreen('plan')} />}
-        {screen === 'plan' && <PlanScreen />}
-        <View style={styles.prototypeNav}>
-          {screens.map((item) => (
-            <Pressable
-              key={item}
-              onPress={() => setScreen(item)}
-              style={styles.navDot}
-            >
-              <View style={[styles.dot, screen === item && styles.dotActive]} />
-            </Pressable>
-          ))}
-        </View>
+        {screen === 'pantry' && (
+          <PantryScreen
+            selected={pantry}
+            excluded={excluded}
+            togglePantry={togglePantry}
+            toggleExcluded={toggleExcluded}
+            next={generatePlan}
+          />
+        )}
+        {screen === 'loading' && <LoadingScreen />}
+        {screen === 'plan' && plan && (
+          <PlanScreen plan={plan} budget={Number(budget)} />
+        )}
+        {screen === 'error' && (
+          <ErrorScreen message={error} retry={generatePlan} />
+        )}
+        {screen !== 'loading' && screen !== 'error' && (
+          <View style={styles.prototypeNav}>
+            {screens.map((item) => (
+              <Pressable
+                key={item}
+                onPress={() =>
+                  item !== 'plan' || plan ? setScreen(item) : undefined
+                }
+                style={styles.navDot}
+              >
+                <View
+                  style={[styles.dot, screen === item && styles.dotActive]}
+                />
+              </Pressable>
+            ))}
+          </View>
+        )}
       </View>
     </SafeAreaView>
   )
@@ -356,6 +668,12 @@ const styles = StyleSheet.create({
   chipActive: { borderColor: colors.green, backgroundColor: colors.pale },
   chipText: { color: colors.muted, fontSize: 13, fontWeight: '600' },
   chipTextActive: { color: colors.green },
+  validationError: {
+    marginTop: 4,
+    color: '#a63d32',
+    fontSize: 13,
+    fontWeight: '700',
+  },
   button: {
     alignItems: 'center',
     marginTop: 18,
@@ -407,6 +725,7 @@ const styles = StyleSheet.create({
   },
   noticeTitle: { color: colors.ink, fontSize: 14, fontWeight: '800' },
   noticeText: { marginTop: 5, color: colors.muted, fontSize: 13 },
+  restrictionChips: { marginTop: 12, marginBottom: 0 },
   summary: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -462,6 +781,33 @@ const styles = StyleSheet.create({
     backgroundColor: colors.pale,
   },
   budgetOk: { color: colors.green, fontSize: 25, fontWeight: '900' },
+  stateScreen: { flex: 1, justifyContent: 'center', padding: 32 },
+  stateTitle: {
+    marginTop: 22,
+    color: colors.ink,
+    fontSize: 26,
+    fontWeight: '800',
+    textAlign: 'center',
+  },
+  stateText: {
+    marginTop: 10,
+    color: colors.muted,
+    fontSize: 15,
+    lineHeight: 23,
+    textAlign: 'center',
+  },
+  errorIcon: {
+    alignSelf: 'center',
+    width: 52,
+    height: 52,
+    paddingTop: 7,
+    borderRadius: 26,
+    backgroundColor: '#f7dfdc',
+    color: '#a63d32',
+    fontSize: 28,
+    fontWeight: '900',
+    textAlign: 'center',
+  },
   prototypeNav: {
     position: 'absolute',
     right: 0,

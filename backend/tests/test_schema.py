@@ -12,4 +12,5 @@ def test_expected_tables_are_registered() -> None:
         "meals",
         "meal_ingredients",
         "shopping_list_items",
+        "meal_plan_results",
     }

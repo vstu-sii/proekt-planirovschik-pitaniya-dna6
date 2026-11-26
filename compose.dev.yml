@@ -6,6 +6,11 @@ x-backend-environment: &backend-environment
   LLM_BASE_URL: ${LLM_BASE_URL:-http://llm-mock:8080}
   LLM_API_KEY: ${LLM_API_KEY:-}
   LLM_TIMEOUT_SECONDS: ${LLM_TIMEOUT_SECONDS:-30}
+  AI_PROVIDER: ${AI_PROVIDER:-http}
+  TRACE_COLLECTOR_URL: ${TRACE_COLLECTOR_URL:-http://tracing:9411}
+  CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8080,http://localhost:8081}
+  GIGACHAT_CREDENTIALS: ${GIGACHAT_CREDENTIALS:-}
+  GIGACHAT_MODEL: ${GIGACHAT_MODEL:-GigaChat-2}
 
 services:
   db:
@@ -51,6 +56,22 @@ services:
       retries: 10
       start_period: 3s
 
+  tracing:
+    build:
+      context: ./stubs/tracing
+    ports:
+      - "${TRACE_PORT:-9411}:9411"
+    volumes:
+      - trace_data:/data
+    networks:
+      - app
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:9411/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 3s
+
   backend:
     build:
       context: ./backend
@@ -69,12 +90,27 @@ services:
         condition: service_completed_successfully
       llm-mock:
         condition: service_healthy
+      tracing:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
       interval: 5s
       timeout: 3s
       retries: 10
       start_period: 5s
+
+  frontend:
+    build:
+      context: ./mobile
+      args:
+        EXPO_PUBLIC_API_URL: ${WEB_API_URL:-http://localhost:8000}
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    networks:
+      - app
+    depends_on:
+      backend:
+        condition: service_healthy
 
 networks:
   app:
@@ -86,3 +122,5 @@ networks:
 volumes:
   postgres_data:
     name: meal-planner-postgres-data
+  trace_data:
+    name: meal-planner-traces

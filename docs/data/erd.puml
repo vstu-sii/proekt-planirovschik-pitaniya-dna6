@@ -10,6 +10,8 @@ entity users {
   * id : uuid <<PK>>
   --
   * email : varchar(320) <<UQ>>
+  height_cm : integer
+  weight_kg : numeric
   * created_at : timestamptz
 }
 
@@ -87,6 +89,13 @@ entity shopping_list_items {
   * estimated_cost : numeric
 }
 
+entity meal_plan_results {
+  * plan_id : uuid <<PK, FK>>
+  --
+  * payload : jsonb
+  * created_at : timestamptz
+}
+
 users ||--o{ dietary_restrictions
 users ||--o{ pantry_items
 users ||--o{ meal_plans
@@ -96,5 +105,6 @@ day_plans ||--|{ meals
 meals ||--|{ meal_ingredients
 products ||--o{ meal_ingredients
 meal_plans ||--o{ shopping_list_items
+meal_plans ||--|| meal_plan_results
 products ||--o{ shopping_list_items
 @enduml
