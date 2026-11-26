@@ -183,6 +183,8 @@ def _persist(db: Session, request: MealPlanRequest, response: MealPlanResponse) 
         status="ready",
     )
     db.add(plan)
+    # Persist the parent before inserting days that reference its UUID.
+    db.flush()
     for restriction in [*request.restrictions, *request.excluded_products]:
         db.add(
             DietaryRestriction(
