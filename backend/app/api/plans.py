@@ -2,11 +2,11 @@ import uuid
 from typing import Annotated
 
 import httpx
+from app.api.schemas import MealPlanRequest, MealPlanResponse
+from app.db.session import get_db
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.api.schemas import MealPlanRequest, MealPlanResponse
-from app.db.session import get_db
 from app.services.meal_plans import UnsafePlanError, generate_and_store, get_stored_plan
 
 router = APIRouter(prefix="/api/v1", tags=["Meal Planning"])
