@@ -73,7 +73,7 @@ jobs:
           curl --fail --retry 5 --retry-connrefused http://localhost:8000/health
           curl --fail -X POST http://localhost:8000/api/v1/ai/meal-plans \
             -H 'Content-Type: application/json' \
-            -d '{"goal":"поддержание веса","budget":{"amount":3500,"currency":"RUB"},"days":1,"restrictions":[],"excluded_products":["арахис"],"pantry":[],"max_cook_time_min":30}'
+            -d '{"profile":{"height_cm":178,"weight_kg":78},"goal":"поддержание веса","budget":{"amount":3500,"currency":"RUB"},"days":1,"restrictions":[],"excluded_products":["арахис"],"pantry":[],"max_cook_time_min":30}'
           curl --fail http://localhost:9411/traces
       - if: always()
         run: docker compose -f compose.dev.yml down --volumes
