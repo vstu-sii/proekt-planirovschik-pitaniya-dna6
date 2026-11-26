@@ -51,14 +51,19 @@
 **Участники:** PRODUCT, AI ENGINEER, DELIVERY, QUALITY & SAFETY  
 **Статус гейта:** запланирован
 
-| Инкремент                             | Статус                | Доказательство (PR/URL/eval)                                  | Принято | Backlog ID | Приоритет | Владелец                       | Статус |
-| ------------------------------------- | --------------------- | ------------------------------------------------------------- | ------- | ---------- | --------- | ------------------------------ | ------ |
-| Генерация и контракт: BUG-021, BUG-E1 | Ожидает приемки 04.12 | лог реального провайдера, eval G2, burndown-fact.md §2        | –       | –          | P0        | AI ENGINEER, DELIVERY          | –      |
-| Safety и аллергены: BUG-E3, BUG-022   | Ожидает приемки 04.12 | safety report, unit-тесты, burndown-fact.md §2                | –       | –          | P0        | AI ENGINEER, QUALITY, DELIVERY | –      |
-| Публикация: INFRA-04                  | Ожидает приемки 04.12 | сквозной прогон на публичном URL, README, burndown-fact.md §2 | –       | –          | P0        | DELIVERY                       | –      |
-| Устойчивость UC-3: BUG-020, BUG-025   | Ожидает приемки 04.12 | E2E пустой список и F5, PR Delivery, burndown-fact.md §2      | –       | –          | P0        | DELIVERY, AI ENGINEER          | –      |
-| Каталог и профиль: BUG-012, BUG-019   | Ожидает приемки 04.12 | PR поиска, DB-check профиля, burndown-fact.md §2              | –       | –          | P0/P1     | DELIVERY, AI ENGINEER          | –      |
-| Контракт и состояние: BUG-E4, BUG-014 | Ожидает приемки 04.12 | OpenAPI-контракт, PR обновления запасов, burndown-fact.md §2  | –       | –          | P1        | AI ENGINEER, DELIVERY, QUALITY | –      |
+**Обновление 26.11:** по BUG-021, BUG-E1, BUG-E3, BUG-022, BUG-E4 зафиксированы доказательства AI Engineer (`04d9e3d`) как «Готово к проверке»; статус «Принято» не изменён, приемка 04.12.
+
+**Проверка 26.11 (PRODUCT / VO):** артефакты `04d9e3d` сверены: live A/B 80/88, JSON-контракт валиден на 80 успешных ответах, safety 16/16 `pending`, tool-contract остаётся прототипом без OpenAPI/бэкенд-интеграции; прод-прогон и ручная проверка Quality отсутствуют. Статус «Принято» не присвоен, строки по BUG-021, BUG-E1, BUG-E3, BUG-022, BUG-E4 остаются «Готово к проверке» до 04.12.
+
+| Инкремент                             | Статус                | Доказательство (PR/URL/eval)                                                                              | Принято | Backlog ID | Приоритет | Владелец                       | Статус     |
+| ------------------------------------- | --------------------- | --------------------------------------------------------------------------------------------------------- | ------- | ---------- | --------- | ------------------------------ | ---------- |
+| Генерация и контракт: BUG-021, BUG-E1 | Готово к проверке     | 04d9e3d, `results/lab4_ab.json`, `docs/experiments/lab4.md`, burndown-fact.md §2 (прод не переключён; 8 SDK-ошибок) | –       | –          | P0        | AI ENGINEER, DELIVERY          | К проверке |
+| Safety и аллергены: BUG-E3, BUG-022   | Готово к проверке     | 04d9e3d, `docs/quality-safety-reconciliation.md`, `results/safety_review.csv`, burndown-fact.md §2 (16/16 `pending`, проверка Quality не выполнена) | –       | –          | P0        | AI ENGINEER, QUALITY, DELIVERY | К проверке |
+| Публикация: INFRA-04                  | Ожидает приемки 04.12 | сквозной прогон на публичном URL, README, burndown-fact.md §2                                             | –       | –          | P0        | DELIVERY                       | –          |
+| Устойчивость UC-3: BUG-020, BUG-025   | Ожидает приемки 04.12 | E2E пустой список и F5, PR Delivery, burndown-fact.md §2                                                  | –       | –          | P0        | DELIVERY, AI ENGINEER          | –          |
+| Каталог и профиль: BUG-012, BUG-019   | Ожидает приемки 04.12 | PR поиска, DB-check профиля, burndown-fact.md §2                                                          | –       | –          | P0/P1     | DELIVERY, AI ENGINEER          | –          |
+| Контракт и состояние: BUG-E4          | Готово к проверке     | 04d9e3d, `docs/tool-contract.md`, `ml/tools/nutrition_catalog.py`, burndown-fact.md §2 (OpenAPI/интеграция не согласованы) | –       | –          | P1        | AI ENGINEER, DELIVERY, QUALITY | К проверке |
+| Обновление запасов: BUG-014           | Ожидает приемки 04.12 | PR обновления запасов, burndown-fact.md §2                                                                 | –       | –          | P1        | DELIVERY                       | –          |
 
 ## 3. Гейт 3 (07.12 – 11.12)
 
