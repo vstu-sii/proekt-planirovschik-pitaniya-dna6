@@ -1,5 +1,6 @@
 import uuid
 
+from app.core.config import settings
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
@@ -7,7 +8,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.api.plans import router as plans_router
-from app.core.config import settings
 
 app = FastAPI(title="Meal Planner API", version="0.3.0")
 
