@@ -1,4 +1,5 @@
 
+import json
 from pathlib import Path
 
 from backend.tests.evals.evaluate import evaluate_case, load_dataset
@@ -24,10 +25,9 @@ def test_missing_response_is_failure():
 
 def test_structured_contract():
     case = load_dataset(str(DATASET))[0]
-
-    valid_result = evaluate_case(case, {"text": '{"answer":"тест"}'})
+    valid_text = json.dumps({"answer": "тест"}, ensure_ascii=False)
+    valid_result = evaluate_case(case, {"text": valid_text})
     invalid_result = evaluate_case(case, {"text": "не JSON"})
 
     assert valid_result["structured_valid"]
     assert not invalid_result["structured_valid"]
-
